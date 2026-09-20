@@ -1,7 +1,6 @@
 import type { LucideIcon } from "lucide-react";
 import { Check, Cog, Layers, Wrench } from "lucide-react";
 
-import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 
 /**
@@ -9,7 +8,6 @@ import { cn } from "@/lib/utils";
  */
 interface ServiceStep {
   id: string;
-  step: string;
   title: string;
   description: string;
   specs: string[];
@@ -21,7 +19,6 @@ interface ServiceStep {
 const SERVICES: ServiceStep[] = [
   {
     id: "vyroba-nastroju",
-    step: "01",
     title: "Výroba nástrojů a přípravků",
     description:
       "Vyrábím technologické, upínací, montážní a kontrolní přípravky pro automotive linky. Zajišťuji kusovou i drobnou nástrojařskou výrobu dle výkresové dokumentace.",
@@ -37,7 +34,6 @@ const SERVICES: ServiceStep[] = [
   },
   {
     id: "presne-kovoobrabeni",
-    step: "02",
     title: "Přesné kovoobrábění",
     description:
       "Provádím třískové obrábění kovu, maloseriovou i zakázkovou výrobu součástí s důrazem na vysokou tvarovou a rozměrovou přesnost.",
@@ -53,7 +49,6 @@ const SERVICES: ServiceStep[] = [
   },
   {
     id: "brouseni-ostreni",
-    step: "03",
     title: "Broušení a ostření nástrojů",
     description:
       "Provádím rovinné a tvarové broušení, renovaci a ostření průmyslových řezných i tvarovacích nástrojů.",
@@ -86,46 +81,41 @@ export default function ServicesSection() {
           </p>
         </div>
 
-        <div className="relative mt-24">
+        <div className="relative mt-16">
           {/* Souvislá technická vodicí linka propojující jednotlivé schody */}
           <div
             aria-hidden="true"
             className="absolute left-6 top-0 bottom-0 w-0.5 -translate-x-1/2 bg-slate-300 lg:left-1/2"
           />
 
-          <div className="space-y-24 sm:space-y-28 lg:space-y-32">
+          <div>
             {SERVICES.map((service, index) => {
               const Icon = service.icon;
               const isEven = index % 2 === 1;
 
               return (
                 <div key={service.id} className="relative">
-                  {/* Technologický indikátor kroku na vodicí lince */}
+                  {/* Technický uzel na vodicí lince */}
                   <div
                     aria-hidden="true"
-                    className="absolute left-6 top-10 z-30 flex h-11 w-11 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border-4 border-white bg-blue-600 text-sm font-bold text-white shadow-md lg:left-1/2 lg:top-1/2"
-                  >
-                    {service.step}
-                  </div>
+                    className="absolute left-6 top-10 z-30 h-3 w-3 -translate-x-1/2 -translate-y-1/2 rounded-full bg-blue-600 ring-4 ring-white lg:left-1/2 lg:top-1/2"
+                  />
 
                   <div
                     className={cn(
-                      "flex flex-col lg:flex-row lg:items-center",
+                      "flex flex-col lg:flex-row lg:items-stretch",
                       isEven && "lg:flex-row-reverse"
                     )}
                   >
                     {/* Vyvýšená bílá karta s textem */}
                     <div
                       className={cn(
-                        "relative z-20 order-1 ml-10 -mb-8 rounded-2xl border border-slate-200/80 bg-white p-7 shadow-xl shadow-slate-200/60 sm:p-8 lg:order-none lg:ml-0 lg:w-[56%] lg:-mb-0",
+                        "relative z-20 order-1 ml-10 -mb-8 border border-slate-200/80 bg-white p-7 shadow-xl shadow-slate-200/60 sm:p-8 lg:order-none lg:ml-0 lg:mb-0 lg:w-1/2",
                         isEven ? "lg:-ml-14" : "lg:-mr-14"
                       )}
                     >
-                      <div className="flex flex-wrap items-center gap-3">
-                        <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-blue-50 text-blue-600">
-                          <Icon className="h-6 w-6" />
-                        </div>
-                        <Badge variant="secondary">Krok {service.step}</Badge>
+                      <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-blue-50 text-blue-600">
+                        <Icon className="h-6 w-6" />
                       </div>
 
                       <h3 className="mt-4 text-xl font-bold tracking-tight text-slate-900">
@@ -151,7 +141,7 @@ export default function ServicesSection() {
                     {/* Podkladový blok s fotkou */}
                     <div
                       className={cn(
-                        "relative z-10 order-2 ml-10 aspect-[4/3] overflow-hidden rounded-2xl border border-slate-800/60 shadow-lg lg:order-none lg:ml-0 lg:aspect-[16/9] lg:w-[56%]"
+                        "relative z-10 order-2 ml-10 aspect-[4/3] overflow-hidden border border-slate-800/60 lg:order-none lg:ml-0 lg:aspect-auto lg:w-1/2"
                       )}
                     >
                       <div className="absolute inset-0 bg-gradient-to-br from-slate-800 via-slate-900 to-black" />
