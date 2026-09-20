@@ -4,14 +4,15 @@ import { useState } from "react";
 import type { FormEvent } from "react";
 import {
   CheckCircle2,
-  Clock,
-  Mail,
+  Layers,
   MapPin,
-  Phone,
+  Paperclip,
+  PhoneCall,
   RotateCcw,
   Send,
-  Paperclip,
+  ShieldCheck,
 } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -54,6 +55,11 @@ interface ContactFormState {
   isSuccess: boolean;
 }
 
+interface QuickHighlight {
+  icon: LucideIcon;
+  label: string;
+}
+
 const INITIAL_FORM_DATA: ContactFormData = {
   name: "",
   email: "",
@@ -65,9 +71,12 @@ const PHONE_NUMBER = "+420 606 265 474";
 const PHONE_HREF = "tel:+420606265474";
 const EMAIL_ADDRESS = "kovovorlicky@seznam.cz";
 const EMAIL_HREF = "mailto:kovovorlicky@seznam.cz";
-const ADDRESS = "Dolní Řasnice 119, 464 01 Frýdlant v Čechách";
-const ICO = "49898213";
-const MAP_QUERY = encodeURIComponent("Dolní Řasnice 119, 464 01 Frýdlant v Čechách");
+
+const QUICK_HIGHLIGHTS: QuickHighlight[] = [
+  { icon: ShieldCheck, label: "Automotive standardy" },
+  { icon: Layers, label: "Zakázková i maloseriová výroba" },
+  { icon: MapPin, label: "Frýdlantský výběžek a Liberecko" },
+];
 
 function validateForm(data: ContactFormData): ContactFormErrors {
   const errors: ContactFormErrors = {};
@@ -158,7 +167,7 @@ export default function ContactSection() {
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-2xl text-center">
           <h2 className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">
-            Kontakt a poptávka
+            Poptávka výroby
           </h2>
           <p className="mt-4 text-base leading-relaxed text-slate-600">
             Máte poptávku na výrobu nástroje, přípravku nebo obrobku? Napište
@@ -167,82 +176,41 @@ export default function ContactSection() {
         </div>
 
         <div className="mt-14 grid grid-cols-1 gap-10 lg:grid-cols-2">
-          <div className="space-y-6">
-            <Card className="border-slate-200">
-              <CardContent className="space-y-5 pt-6">
-                <div className="flex items-start gap-3">
-                  <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-blue-50 text-blue-600">
-                    <Phone className="h-5 w-5" />
-                  </div>
-                  <div>
-                    <p className="text-sm text-slate-500">Telefon</p>
-                    <a
-                      href={PHONE_HREF}
-                      className="text-base font-semibold text-slate-900 hover:text-blue-600"
-                    >
-                      {PHONE_NUMBER}
-                    </a>
-                  </div>
-                </div>
+          <div className="flex flex-col justify-between rounded-2xl bg-slate-900 p-8 text-white sm:p-10">
+            <div>
+              <h3 className="text-xl font-bold sm:text-2xl">
+                Poptávku vyřídíme rychle a bez zbytečných průtahů
+              </h3>
+              <p className="mt-4 text-sm leading-relaxed text-slate-300">
+                Zašlete nám výkresovou dokumentaci a specifikaci dílu, do
+                nejbližšího pracovního dne se vám ozveme s návrhem řešení a
+                orientační cenou.
+              </p>
 
-                <div className="flex items-start gap-3">
-                  <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-blue-50 text-blue-600">
-                    <Mail className="h-5 w-5" />
-                  </div>
-                  <div>
-                    <p className="text-sm text-slate-500">E-mail</p>
-                    <a
-                      href={EMAIL_HREF}
-                      className="text-base font-semibold text-slate-900 hover:text-blue-600"
-                    >
-                      {EMAIL_ADDRESS}
-                    </a>
-                  </div>
-                </div>
+              <ul className="mt-8 space-y-4">
+                {QUICK_HIGHLIGHTS.map((item) => {
+                  const Icon = item.icon;
+                  return (
+                    <li key={item.label} className="flex items-center gap-3">
+                      <Icon className="h-5 w-5 flex-shrink-0 text-blue-400" />
+                      <span className="text-sm text-slate-200">
+                        {item.label}
+                      </span>
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
 
-                <div className="flex items-start gap-3">
-                  <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-blue-50 text-blue-600">
-                    <MapPin className="h-5 w-5" />
-                  </div>
-                  <div>
-                    <p className="text-sm text-slate-500">Adresa dílny</p>
-                    <p className="text-base font-semibold text-slate-900">
-                      {ADDRESS}
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-3">
-                  <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-blue-50 text-blue-600">
-                    <Clock className="h-5 w-5" />
-                  </div>
-                  <div>
-                    <p className="text-sm text-slate-500">Provozní doba</p>
-                    <p className="text-base font-semibold text-slate-900">
-                      Pondělí až pátek 7:00 až 15:30
-                    </p>
-                    <p className="text-sm text-slate-500">
-                      Sobota a neděle zavřeno
-                    </p>
-                  </div>
-                </div>
-
-                <div className="border-t border-slate-200 pt-4 text-sm text-slate-500">
-                  IČO: {ICO}
-                </div>
-              </CardContent>
-            </Card>
-
-            <div className="overflow-hidden rounded-2xl border border-slate-200 shadow-sm">
-              <iframe
-                title="Mapa - Dolní Řasnice 119, provozovna Jiří Vorlický"
-                src={`https://www.google.com/maps?q=${MAP_QUERY}&output=embed`}
-                width="100%"
-                height="300"
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                className="block w-full border-0"
-              />
+            <div className="mt-10 border-t border-slate-800 pt-6">
+              <p className="text-sm text-slate-400">Preferujete telefon?</p>
+              <a
+                href={PHONE_HREF}
+                className="mt-2 inline-flex items-center gap-2 text-lg font-semibold text-white hover:text-blue-400"
+              >
+                <PhoneCall className="h-5 w-5" />
+                {PHONE_NUMBER}
+              </a>
             </div>
           </div>
 

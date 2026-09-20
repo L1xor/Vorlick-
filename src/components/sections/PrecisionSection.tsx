@@ -75,7 +75,7 @@ export default function PrecisionSection() {
               const Icon = point.icon;
               return (
                 <div key={point.title} className="flex gap-4">
-                  <div className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-xl bg-white text-blue-600 shadow-sm ring-1 ring-slate-200">
+                  <div className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-xl bg-slate-900 text-white shadow-sm">
                     <Icon className="h-5 w-5" />
                   </div>
                   <div>
@@ -91,8 +91,8 @@ export default function PrecisionSection() {
             })}
           </div>
 
-          <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
-            <div className="mb-6 flex items-center gap-2 text-sm font-semibold text-slate-500">
+          <div className="rounded-2xl bg-slate-900 p-6 shadow-lg sm:p-8">
+            <div className="mb-6 flex items-center gap-2 text-sm font-semibold text-slate-400">
               <FileSearch className="h-4 w-4" />
               Výrobní postup
             </div>
@@ -104,21 +104,21 @@ export default function PrecisionSection() {
                       {step.number}
                     </span>
                     {index < PROCESS_STEPS.length - 1 && (
-                      <span className="mt-1 h-full w-px flex-1 bg-slate-200" />
+                      <span className="mt-1 h-full w-px flex-1 bg-slate-700" />
                     )}
                   </div>
                   <div className="pb-2">
-                    <h4 className="text-base font-semibold text-slate-900">
+                    <h4 className="text-base font-semibold text-white">
                       {step.title}
                     </h4>
-                    <p className="mt-1.5 text-sm leading-relaxed text-slate-600">
+                    <p className="mt-1.5 text-sm leading-relaxed text-slate-400">
                       {step.description}
                     </p>
                   </div>
                 </li>
               ))}
             </ol>
-            <div className="mt-2 flex items-center gap-2 rounded-lg bg-blue-50 p-3 text-sm text-blue-700">
+            <div className="mt-2 flex items-center gap-2 rounded-lg bg-slate-800 p-3 text-sm text-blue-300">
               <PackageCheck className="h-4 w-4 flex-shrink-0" />
               <span>Hotové díly předáváme pouze po ověření shody s dokumentací.</span>
             </div>

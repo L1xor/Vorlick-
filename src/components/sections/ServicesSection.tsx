@@ -78,7 +78,7 @@ export default function ServicesSection() {
                 className="group border-slate-200 transition-colors hover:border-blue-300 hover:shadow-md"
               >
                 <CardHeader>
-                  <div className="mb-2 flex h-12 w-12 items-center justify-center rounded-xl bg-blue-50 text-blue-600 transition-colors group-hover:bg-blue-100">
+                  <div className="mb-2 flex h-12 w-12 items-center justify-center rounded-xl bg-slate-900 text-white transition-colors group-hover:bg-blue-600">
                     <Icon className="h-6 w-6" />
                   </div>
                   <CardTitle>{service.title}</CardTitle>
