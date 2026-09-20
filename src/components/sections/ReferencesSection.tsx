@@ -63,8 +63,6 @@ export default function ReferencesSection() {
     return () => clearInterval(timer);
   }, []);
 
-  const active = TESTIMONIALS[activeIndex];
-
   return (
     <section className="bg-slate-50 py-20 sm:py-28">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
@@ -79,23 +77,37 @@ export default function ReferencesSection() {
         </div>
 
         <div className="mx-auto mt-14 max-w-3xl">
-          <div className="relative overflow-hidden rounded-2xl bg-slate-900 p-8 text-white shadow-lg sm:p-12">
-            <Quote className="h-8 w-8 text-blue-500" aria-hidden="true" />
+          <div className="relative overflow-hidden rounded-2xl bg-slate-900 shadow-lg">
+            <div
+              className="flex transition-transform duration-700 ease-in-out"
+              style={{ transform: `translateX(-${activeIndex * 100}%)` }}
+            >
+              {TESTIMONIALS.map((testimonial) => (
+                <div
+                  key={testimonial.id}
+                  className="w-full flex-shrink-0 p-8 text-white sm:p-12"
+                >
+                  <Quote className="h-8 w-8 text-blue-500" aria-hidden="true" />
 
-            <p className="mt-6 min-h-[6rem] text-lg leading-relaxed text-slate-200 sm:text-xl">
-              „{active.quote}“
-            </p>
+                  <p className="mt-6 min-h-[6rem] text-lg leading-relaxed text-slate-200 sm:text-xl">
+                    „{testimonial.quote}“
+                  </p>
 
-            <div className="mt-8 flex items-center gap-4 border-t border-slate-800 pt-6">
-              <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-blue-600 text-base font-bold text-white">
-                {getInitials(active.name)}
-              </div>
-              <div>
-                <p className="text-sm font-semibold text-white">
-                  {active.name}
-                </p>
-                <p className="text-sm text-slate-400">{active.role}</p>
-              </div>
+                  <div className="mt-8 flex items-center gap-4 border-t border-slate-800 pt-6">
+                    <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-blue-600 text-base font-bold text-white">
+                      {getInitials(testimonial.name)}
+                    </div>
+                    <div>
+                      <p className="text-sm font-semibold text-white">
+                        {testimonial.name}
+                      </p>
+                      <p className="text-sm text-slate-400">
+                        {testimonial.role}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
 
