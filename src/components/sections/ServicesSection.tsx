@@ -12,6 +12,7 @@ interface ServiceStep {
   description: string;
   specs: string[];
   icon: LucideIcon;
+  imageSrc: string;
   imageLabel: string;
   imageCaption: string;
 }
@@ -29,6 +30,7 @@ const SERVICES: ServiceStep[] = [
       "Konzultace konstrukčního řešení s technologem",
     ],
     icon: Wrench,
+    imageSrc: "https://picsum.photos/seed/vorlicky-nastroje/1200/900",
     imageLabel: "Nástrojařská výroba",
     imageCaption: "Detail výroby upínacího přípravku",
   },
@@ -44,6 +46,7 @@ const SERVICES: ServiceStep[] = [
       "Výstupní kontrola rozměrů a tolerancí",
     ],
     icon: Cog,
+    imageSrc: "https://picsum.photos/seed/vorlicky-obrabeni/1200/900",
     imageLabel: "Kovoobráběcí výroba",
     imageCaption: "Detail obrábění přesné součásti",
   },
@@ -59,6 +62,7 @@ const SERVICES: ServiceStep[] = [
       "Ostření řezných a tvarovacích nástrojů",
     ],
     icon: Layers,
+    imageSrc: "https://picsum.photos/seed/vorlicky-brouseni/1200/900",
     imageLabel: "Broušení nástrojů",
     imageCaption: "Detail broušení řezného nástroje",
   },
@@ -109,10 +113,7 @@ export default function ServicesSection() {
                   >
                     {/* Vyvýšená bílá karta s textem */}
                     <div
-                      className={cn(
-                        "relative z-20 order-1 ml-10 -mb-8 border border-slate-200/80 bg-white p-7 shadow-xl shadow-slate-200/60 sm:p-8 lg:order-none lg:ml-0 lg:mb-0 lg:w-1/2",
-                        isEven ? "lg:-ml-14" : "lg:-mr-14"
-                      )}
+                      className="relative z-20 order-1 ml-10 border border-slate-200/80 bg-white p-7 sm:p-8 lg:order-none lg:ml-0 lg:w-1/2"
                     >
                       <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-blue-50 text-blue-600">
                         <Icon className="h-6 w-6" />
@@ -138,27 +139,19 @@ export default function ServicesSection() {
                       </ul>
                     </div>
 
-                    {/* Podkladový blok s fotkou */}
-                    <div
-                      className={cn(
-                        "relative z-10 order-2 ml-10 aspect-[4/3] overflow-hidden border border-slate-800/60 lg:order-none lg:ml-0 lg:aspect-auto lg:w-1/2"
-                      )}
-                    >
-                      <div className="absolute inset-0 bg-gradient-to-br from-slate-800 via-slate-900 to-black" />
-                      <div
-                        aria-hidden="true"
-                        className="absolute inset-0 opacity-[0.07]"
-                        style={{
-                          backgroundImage:
-                            "linear-gradient(rgba(255,255,255,0.6) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.6) 1px, transparent 1px)",
-                          backgroundSize: "28px 28px",
-                        }}
+                    {/* Podkladový blok s ilustrační fotkou */}
+                    <div className="relative z-10 order-2 ml-10 aspect-[4/3] overflow-hidden border border-slate-800/60 lg:order-none lg:ml-0 lg:aspect-auto lg:w-1/2">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src={service.imageSrc}
+                        alt={service.imageCaption}
+                        loading="lazy"
+                        decoding="async"
+                        className="absolute inset-0 h-full w-full object-cover grayscale contrast-125 brightness-[0.6]"
                       />
-                      <Icon
-                        aria-hidden="true"
-                        className="absolute -bottom-8 -right-8 h-44 w-44 text-white/[0.06]"
-                      />
-                      <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent p-5 sm:p-6">
+                      <div className="absolute inset-0 bg-blue-950/30 mix-blend-multiply" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent" />
+                      <div className="absolute inset-x-0 bottom-0 p-5 sm:p-6">
                         <p className="text-[11px] font-semibold uppercase tracking-widest text-blue-400">
                           {service.imageLabel}
                         </p>
