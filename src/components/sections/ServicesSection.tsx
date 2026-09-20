@@ -17,6 +17,17 @@ interface ServiceStep {
   imageCaption: string;
 }
 
+/**
+ * Poměr šířky textové karty a fotoblu pro každý schod. Hodnoty se lisi,
+ * aby jednotlive schody nepusobily jako pravidelna tabulka, a textova
+ * karta je zaroven o kus sirsi nez podkladova fotka.
+ */
+const STEP_WIDTHS: { text: string; photo: string }[] = [
+  { text: "lg:w-[58%]", photo: "lg:w-[42%]" },
+  { text: "lg:w-[52%]", photo: "lg:w-[48%]" },
+  { text: "lg:w-[62%]", photo: "lg:w-[38%]" },
+];
+
 const SERVICES: ServiceStep[] = [
   {
     id: "vyroba-nastroju",
@@ -96,6 +107,7 @@ export default function ServicesSection() {
             {SERVICES.map((service, index) => {
               const Icon = service.icon;
               const isEven = index % 2 === 1;
+              const widths = STEP_WIDTHS[index % STEP_WIDTHS.length];
 
               return (
                 <div key={service.id} className="relative">
@@ -113,7 +125,10 @@ export default function ServicesSection() {
                   >
                     {/* Vyvýšená bílá karta s textem */}
                     <div
-                      className="relative z-20 order-1 ml-10 border border-slate-200/80 bg-white p-7 sm:p-8 lg:order-none lg:ml-0 lg:w-1/2"
+                      className={cn(
+                        "relative z-20 order-1 ml-10 border border-slate-200/80 bg-white p-7 sm:p-8 lg:order-none lg:ml-0",
+                        widths.text
+                      )}
                     >
                       <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-blue-50 text-blue-600">
                         <Icon className="h-6 w-6" />
@@ -140,7 +155,12 @@ export default function ServicesSection() {
                     </div>
 
                     {/* Podkladový blok s ilustrační fotkou */}
-                    <div className="relative z-10 order-2 ml-10 aspect-[4/3] overflow-hidden border border-slate-800/60 lg:order-none lg:ml-0 lg:aspect-auto lg:w-1/2">
+                    <div
+                      className={cn(
+                        "relative z-10 order-2 ml-10 aspect-[4/3] overflow-hidden border border-slate-800/60 lg:order-none lg:ml-0 lg:aspect-auto",
+                        widths.photo
+                      )}
+                    >
                       {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img
                         src={service.imageSrc}
