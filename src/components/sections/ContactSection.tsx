@@ -171,7 +171,7 @@ export default function ContactSection() {
           </h2>
           <p className="mt-4 text-base leading-relaxed text-slate-600">
             Máte poptávku na výrobu nástroje, přípravku nebo obrobku? Napište
-            nám nebo zavolejte, ozveme se zpět s návrhem řešení.
+            mi nebo zavolejte, ozvu se zpět s návrhem řešení.
           </p>
         </div>
 
@@ -179,11 +179,11 @@ export default function ContactSection() {
           <div className="flex flex-col justify-between rounded-2xl bg-slate-900 p-8 text-white sm:p-10">
             <div>
               <h3 className="text-xl font-bold sm:text-2xl">
-                Poptávku vyřídíme rychle a bez zbytečných průtahů
+                Poptávku vyřídím rychle a bez zbytečných průtahů
               </h3>
               <p className="mt-4 text-sm leading-relaxed text-slate-300">
-                Zašlete nám výkresovou dokumentaci a specifikaci dílu, do
-                nejbližšího pracovního dne se vám ozveme s návrhem řešení a
+                Zašlete mi výkresovou dokumentaci a specifikaci dílu, do
+                nejbližšího pracovního dne se vám ozvu s návrhem řešení a
                 orientační cenou.
               </p>
 
@@ -218,7 +218,7 @@ export default function ContactSection() {
             <CardHeader>
               <CardTitle>Poptávkový formulář</CardTitle>
               <CardDescription>
-                Vyplňte základní údaje a stručně popište zadání, ozveme se vám
+                Vyplňte základní údaje a stručně popište zadání, ozvu se vám
                 zpět s cenovou nabídkou.
               </CardDescription>
             </CardHeader>
@@ -231,8 +231,8 @@ export default function ContactSection() {
                       Poptávka byla úspěšně odeslána
                     </p>
                     <p className="mt-2 text-sm text-slate-600">
-                      Děkujeme za váš zájem. Ozveme se vám na uvedený kontakt
-                      co nejdříve.
+                      Děkuji za váš zájem. Ozvu se vám na uvedený kontakt co
+                      nejdříve.
                     </p>
                   </div>
                   <Button variant="outline" onClick={handleNewInquiry}>
@@ -314,7 +314,7 @@ export default function ContactSection() {
                     <Paperclip className="mt-0.5 h-4 w-4 flex-shrink-0 text-blue-600" />
                     <span>
                       Máte hotovou výkresovou dokumentaci v PDF, STEP nebo
-                      DWG? Zašlete nám ji přímo na e-mail:{" "}
+                      DWG? Zašlete mi ji přímo na e-mail:{" "}
                       <a
                         href={EMAIL_HREF}
                         className="font-medium text-blue-600 hover:underline"
