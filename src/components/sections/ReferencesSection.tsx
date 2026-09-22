@@ -19,34 +19,46 @@ interface MachineItem {
 
 const MACHINES: MachineItem[] = [
   {
-    id: "stroj-01",
-    name: "Název stroje 1",
-    description: "Popisek stroje bude doplněn.",
-    imageSrc: "https://picsum.photos/seed/vorlicky-stroj-01/1200/900",
+    id: "frezka-fngj-32",
+    name: "Frézka FNGJ 32",
+    description:
+      "Konzolová frézka pro přesné frézování rovinných i tvarových ploch na ocelových a hliníkových dílech.",
+    imageSrc: "/machines/frezka-fngj-32.jpg",
   },
   {
-    id: "stroj-02",
-    name: "Název stroje 2",
-    description: "Popisek stroje bude doplněn.",
-    imageSrc: "https://picsum.photos/seed/vorlicky-stroj-02/1200/900",
+    id: "konzolova-frezka",
+    name: "Konzolová frézka",
+    description:
+      "Frézování drážek, ploch a profilů u menších i středně velkých obrobků dle výkresové dokumentace.",
+    imageSrc: "/machines/konzolova-frezka.jpg",
   },
   {
-    id: "stroj-03",
-    name: "Název stroje 3",
-    description: "Popisek stroje bude doplněn.",
-    imageSrc: "https://picsum.photos/seed/vorlicky-stroj-03/1200/900",
+    id: "soustruh-sr-18-ra",
+    name: "Soustruh SR 18 RA",
+    description:
+      "Univerzální soustruh pro soustružení hřídelí, čepů a dalších rotačních součástí s vysokou přesností.",
+    imageSrc: "/machines/soustruh-sr-18-ra.jpg",
   },
   {
-    id: "stroj-04",
-    name: "Název stroje 4",
-    description: "Popisek stroje bude doplněn.",
-    imageSrc: "https://picsum.photos/seed/vorlicky-stroj-04/1200/900",
+    id: "souradnicova-vyvrtavacka",
+    name: "Souřadnicová vyvrtávačka",
+    description:
+      "Vrtání a vyvrtávání otvorů s vysokou polohovou a rozměrovou přesností pro náročné konstrukční díly.",
+    imageSrc: "/machines/souradnicova-vyvrtavacka.jpg",
   },
   {
-    id: "stroj-05",
-    name: "Název stroje 5",
-    description: "Popisek stroje bude doplněn.",
-    imageSrc: "https://picsum.photos/seed/vorlicky-stroj-05/1200/900",
+    id: "rovinna-bruska",
+    name: "Rovinná bruska",
+    description:
+      "Broušení rovinných ploch obráběných dílů do přesných rozměrů s hladkým, jemným povrchem.",
+    imageSrc: "/machines/rovinna-bruska.jpg",
+  },
+  {
+    id: "nastrojova-bruska-vizas",
+    name: "Nástrojová bruska VIZAS",
+    description:
+      "Broušení a ostření řezných nástrojů a nožů s důrazem na přesnou geometrii a ostří.",
+    imageSrc: "/machines/nastrojova-bruska-vizas.jpg",
   },
 ];
 
