@@ -38,7 +38,7 @@ export default function PrecisionSection() {
         </div>
 
         <div className="mt-14 grid grid-cols-1 items-start gap-12 lg:grid-cols-2">
-          <div className="rounded-2xl bg-white p-6 shadow-lg ring-1 ring-slate-200 sm:p-8 lg:-mt-8">
+          <div className="rounded-2xl bg-white p-6 shadow-lg ring-1 ring-slate-200 sm:p-8 lg:-mt-10">
             <p className="text-xs font-semibold uppercase tracking-widest text-blue-600">
               O nástrojárně
             </p>
@@ -64,7 +64,7 @@ export default function PrecisionSection() {
             </div>
           </div>
 
-          <div className="rounded-2xl bg-slate-900 p-6 shadow-lg sm:p-8">
+          <div className="rounded-2xl bg-slate-900 p-6 shadow-lg sm:p-8 lg:mt-10">
             <div className="mb-6 flex items-center gap-2 text-sm font-semibold text-slate-400">
               <FileSearch className="h-4 w-4" />
               Zakládám si na kvalitě
