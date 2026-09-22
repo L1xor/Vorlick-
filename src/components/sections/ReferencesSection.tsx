@@ -120,8 +120,8 @@ export default function ReferencesSection() {
           </p>
         </div>
 
-        <div className="relative mx-auto mt-14 max-w-xs sm:max-w-sm">
-          <div className="relative h-[380px] w-full overflow-hidden sm:h-[440px]">
+        <div className="relative mx-auto mt-14 w-full max-w-2xl">
+          <div className="relative h-[360px] w-full overflow-hidden sm:h-[420px]">
             <div className="relative flex h-full w-full items-center justify-center">
               {MACHINES.map((machine, index) => {
                 const diff = getCircularDistance(index, currentIndex, MACHINE_COUNT);
@@ -143,20 +143,20 @@ export default function ReferencesSection() {
                     aria-hidden={!isVisible}
                     tabIndex={isVisible ? 0 : -1}
                     className={cn(
-                      "group absolute left-1/2 top-1/2 w-56 -translate-y-1/2 rounded-2xl bg-slate-900 text-left shadow-lg transition-all duration-500 ease-out sm:w-64",
-                      isActive && "z-20 -translate-x-1/2 scale-100 opacity-100",
-                      isPrev && "z-10 -translate-x-[112%] scale-[0.85] opacity-60",
-                      isNext && "z-10 translate-x-[12%] scale-[0.85] opacity-60",
+                      "group absolute left-1/2 top-1/2 w-40 -translate-y-1/2 overflow-hidden rounded-2xl bg-slate-900 text-left ring-1 ring-white/5 transition-all duration-500 ease-out sm:w-48",
+                      isActive && "z-20 -translate-x-1/2 scale-100 opacity-100 shadow-2xl",
+                      isPrev && "z-10 -translate-x-[130%] scale-[0.82] opacity-70 shadow-xl",
+                      isNext && "z-10 translate-x-[30%] scale-[0.82] opacity-70 shadow-xl",
                       !isVisible &&
                         "pointer-events-none z-0 -translate-x-1/2 scale-75 opacity-0"
                     )}
                   >
-                    <div className="relative aspect-[3/4] w-full overflow-hidden rounded-t-2xl bg-slate-950">
+                    <div className="relative aspect-[3/4] w-full bg-slate-950">
                       <Image
                         src={machine.imageSrc}
                         alt={machine.name}
                         fill
-                        sizes="(max-width: 640px) 224px, 256px"
+                        sizes="(max-width: 640px) 160px, 192px"
                         className="object-cover grayscale contrast-125 brightness-[0.85] transition-transform duration-500 group-hover:scale-105"
                       />
                       <div className="absolute inset-0 bg-blue-950/20 mix-blend-multiply" />
