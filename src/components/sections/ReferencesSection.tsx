@@ -130,7 +130,7 @@ export default function ReferencesSection() {
           </p>
         </div>
 
-        <div className="mx-auto mt-14 max-w-3xl">
+        <div className="mx-auto mt-14 max-w-xl">
           <div className="relative overflow-hidden rounded-2xl bg-slate-900 shadow-lg">
             <div
               onTransitionEnd={handleTransitionEnd}
@@ -146,7 +146,7 @@ export default function ReferencesSection() {
                     type="button"
                     onClick={() => setZoomedMachine(machine)}
                     aria-label={`Zvětšit fotku: ${machine.name}`}
-                    className="group relative block aspect-[4/3] w-full overflow-hidden"
+                    className="group relative block aspect-[3/4] w-full overflow-hidden bg-slate-950"
                   >
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
@@ -154,7 +154,7 @@ export default function ReferencesSection() {
                       alt={machine.name}
                       loading="lazy"
                       decoding="async"
-                      className="absolute inset-0 h-full w-full object-cover grayscale contrast-125 brightness-[0.7] transition-transform duration-500 group-hover:scale-105"
+                      className="absolute inset-0 h-full w-full object-contain grayscale contrast-125 brightness-[0.85] transition-transform duration-500 group-hover:scale-105"
                     />
                     <div className="absolute inset-0 bg-blue-950/20 mix-blend-multiply" />
                     <div className="absolute inset-0 flex items-center justify-center bg-slate-950/0 transition-colors group-hover:bg-slate-950/30">
