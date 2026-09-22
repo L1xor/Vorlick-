@@ -130,7 +130,7 @@ export default function ReferencesSection() {
           </p>
         </div>
 
-        <div className="mx-auto mt-14 max-w-xl">
+        <div className="mx-auto mt-14 max-w-sm">
           <div className="relative overflow-hidden rounded-2xl bg-slate-900 shadow-lg">
             <div
               onTransitionEnd={handleTransitionEnd}
