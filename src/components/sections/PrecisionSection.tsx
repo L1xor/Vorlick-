@@ -18,19 +18,19 @@ const RELIABILITY_POINTS: ReliabilityPoint[] = [
     icon: BadgeCheck,
     title: "Dlouholetá praxe v oboru",
     description:
-      "Řadu let se věnuji nástrojářské výrobě a kovoobrábění pro strojírenské a automotive dodavatele v regionu i mimo něj.",
+      "Dlouholetá praxe v nástrojářské výrobě a kovoobrábění pro strojírenské dodavatele v regionu i mimo něj.",
   },
   {
     icon: Settings2,
     title: "Flexibilita zakázkové nástrojárny",
     description:
-      "Přizpůsobím se konkrétní poptávce, od jednoho kusu přípravku po opakovanou maloseriovou výrobu součástí.",
+      "Přizpůsobení konkrétní poptávce, od jednoho kusu přípravku po opakovanou maloseriovou výrobu součástí.",
   },
   {
     icon: ClipboardCheck,
     title: "Přísná výstupní kontrola",
     description:
-      "Každý vyrobený díl u mě prochází kontrolou rozměrů a tvarové přesnosti tak, aby splňoval požadavky výkresové dokumentace.",
+      "Každý vyrobený díl prochází kontrolou rozměrů a tvarové přesnosti tak, aby splňoval požadavky výkresové dokumentace.",
   },
 ];
 
@@ -39,19 +39,19 @@ const PROCESS_STEPS: ProcessStep[] = [
     number: "01",
     title: "Příjem výkresu a poptávky",
     description:
-      "Zašlete mi výkresovou dokumentaci a specifikaci dílu. Poptávku posoudím a navrhnu technologický postup výroby.",
+      "Zaslání výkresové dokumentace a specifikace dílu. Posouzení poptávky a návrh technologického postupu výroby.",
   },
   {
     number: "02",
     title: "Výroba a kontrola rozměrů",
     description:
-      "Díl vyrobím na vlastním strojním vybavení a v průběhu výroby i po jejím dokončení provádím kontrolu rozměrové přesnosti.",
+      "Výroba dílu na vlastním strojním vybavení a kontrola rozměrové přesnosti v průběhu výroby i po jejím dokončení.",
   },
   {
     number: "03",
     title: "Expedice hotových dílů",
     description:
-      "Hotové díly zabalím a připravím k předání či expedici tak, aby dorazily k zákazníkovi ve stavu odpovídajícím zadání.",
+      "Balení a příprava hotových dílů k předání či expedici ve stavu odpovídajícím zadání.",
   },
 ];
 
@@ -64,8 +64,8 @@ export default function PrecisionSection() {
             O nástrojárně a přesnosti výroby
           </h2>
           <p className="mt-4 text-base leading-relaxed text-slate-600">
-            Spojuji řemeslnou zkušenost s důrazem na přesnost, kterou vyžadují
-            dodavatelé pro automotive a strojírenský průmysl.
+            Spojení řemeslné zkušenosti s důrazem na přesnost, kterou vyžaduje
+            strojírenský průmysl.
           </p>
         </div>
 
@@ -120,7 +120,7 @@ export default function PrecisionSection() {
             </ol>
             <div className="mt-2 flex items-center gap-2 rounded-lg bg-slate-800 p-3 text-sm text-blue-300">
               <PackageCheck className="h-4 w-4 flex-shrink-0" />
-              <span>Hotové díly předávám pouze po ověření shody s dokumentací.</span>
+              <span>Hotové díly se předávají pouze po ověření shody s dokumentací.</span>
             </div>
           </div>
         </div>

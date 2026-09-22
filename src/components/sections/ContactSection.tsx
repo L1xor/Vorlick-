@@ -73,7 +73,7 @@ const EMAIL_ADDRESS = "kovovorlicky@seznam.cz";
 const EMAIL_HREF = "mailto:kovovorlicky@seznam.cz";
 
 const QUICK_HIGHLIGHTS: QuickHighlight[] = [
-  { icon: ShieldCheck, label: "Automotive standardy" },
+  { icon: ShieldCheck, label: "Soustružení a frézování" },
   { icon: Layers, label: "Zakázková i maloseriová výroba" },
   { icon: MapPin, label: "Frýdlantský výběžek a Liberecko" },
 ];
@@ -170,8 +170,8 @@ export default function ContactSection() {
             Poptávka výroby
           </h2>
           <p className="mt-4 text-base leading-relaxed text-slate-600">
-            Máte poptávku na výrobu nástroje, přípravku nebo obrobku? Napište
-            mi nebo zavolejte, ozvu se zpět s návrhem řešení.
+            Poptávka na výrobu nástroje, přípravku nebo obrobku? Napište nebo
+            zavolejte, odpověď přijde s návrhem řešení.
           </p>
         </div>
 
@@ -179,12 +179,12 @@ export default function ContactSection() {
           <div className="flex flex-col justify-between rounded-2xl bg-slate-900 p-8 text-white sm:p-10">
             <div>
               <h3 className="text-xl font-bold sm:text-2xl">
-                Poptávku vyřídím rychle a bez zbytečných průtahů
+                Rychlé vyřízení poptávky bez zbytečných průtahů
               </h3>
               <p className="mt-4 text-sm leading-relaxed text-slate-300">
-                Zašlete mi výkresovou dokumentaci a specifikaci dílu, do
-                nejbližšího pracovního dne se vám ozvu s návrhem řešení a
-                orientační cenou.
+                Po zaslání výkresové dokumentace a specifikace dílu přijde do
+                nejbližšího pracovního dne odpověď s návrhem řešení a orientační
+                cenou.
               </p>
 
               <ul className="mt-8 space-y-4">
@@ -218,8 +218,8 @@ export default function ContactSection() {
             <CardHeader>
               <CardTitle>Poptávkový formulář</CardTitle>
               <CardDescription>
-                Vyplňte základní údaje a stručně popište zadání, ozvu se vám
-                zpět s cenovou nabídkou.
+                Vyplňte základní údaje a stručně popište zadání, odpověď
+                přijde s cenovou nabídkou.
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -231,8 +231,8 @@ export default function ContactSection() {
                       Poptávka byla úspěšně odeslána
                     </p>
                     <p className="mt-2 text-sm text-slate-600">
-                      Děkuji za váš zájem. Ozvu se vám na uvedený kontakt co
-                      nejdříve.
+                      Děkujeme za váš zájem. Odpověď přijde na uvedený kontakt
+                      co nejdříve.
                     </p>
                   </div>
                   <Button variant="outline" onClick={handleNewInquiry}>
@@ -313,8 +313,8 @@ export default function ContactSection() {
                   <div className="flex items-start gap-2 rounded-lg bg-slate-50 p-3 text-sm text-slate-600">
                     <Paperclip className="mt-0.5 h-4 w-4 flex-shrink-0 text-blue-600" />
                     <span>
-                      Máte hotovou výkresovou dokumentaci v PDF, STEP nebo
-                      DWG? Zašlete mi ji přímo na e-mail:{" "}
+                      Hotová výkresová dokumentace v PDF, STEP nebo DWG? Pošlete
+                      ji přímo na e-mail:{" "}
                       <a
                         href={EMAIL_HREF}
                         className="font-medium text-blue-600 hover:underline"

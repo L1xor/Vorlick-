@@ -53,8 +53,8 @@ export default function Footer() {
               Nástrojárna a zakázkové kovoobrábění · Dolní Řasnice
             </p>
             <p className="mt-4 text-sm leading-relaxed text-slate-400">
-              Vyrábím nástroje, přípravky a provádím přesné kovoobrábění pro
-              automotive a strojírenský průmysl na Frýdlantsku.
+              Výroba nástrojů, přípravků a přesné kovoobrábění včetně soustružení
+              a frézování pro strojírenský průmysl na Frýdlantsku.
             </p>
             <div className="mt-6 space-y-1 text-xs text-slate-500">
               <p>IČO: 49898213</p>
@@ -116,7 +116,7 @@ export default function Footer() {
 
         <div className="mt-12 flex flex-col gap-3 border-t border-slate-800 pt-6 text-xs text-slate-500 sm:flex-row sm:items-center sm:justify-between">
           <p>© {currentYear} Jiří Vorlický. Všechna práva vyhrazena.</p>
-          <p>Moje nástrojárna a kovoobrábění pro automotive a strojírenství</p>
+          <p>Nástrojárna a kovoobrábění pro strojírenský průmysl</p>
         </div>
       </div>
     </footer>

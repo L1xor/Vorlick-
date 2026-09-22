@@ -19,7 +19,7 @@ const TESTIMONIALS: Testimonial[] = [
   {
     id: "reference-01",
     name: "Petr Malý",
-    role: "Vedoucí nákupu, dodavatel dílů pro automotive",
+    role: "Vedoucí nákupu, dodavatel dílů pro průmysl",
     quote:
       "Pan Vorlický nám opakovaně vyrobil upínací přípravky přesně dle výkresové dokumentace a v domluveném termínu. Rozměrová přesnost byla vždy bez připomínek.",
   },
@@ -35,7 +35,7 @@ const TESTIMONIALS: Testimonial[] = [
     name: "Tomáš Novotný",
     role: "Majitel výrobní firmy, Liberecký kraj",
     quote:
-      "Broušení a renovaci našich řezných nástrojů řešíme s panem Vorlickým dlouhodobě. Nástroje se nám vrací v kvalitě, na kterou se dá spolehnout.",
+      "Soustružení a frézování přesných dílů řešíme s panem Vorlickým dlouhodobě. Díly se nám vrací v kvalitě, na kterou se dá spolehnout.",
   },
 ];
 
@@ -71,8 +71,7 @@ export default function ReferencesSection() {
             Reference klientů
           </h2>
           <p className="mt-4 text-base leading-relaxed text-slate-600">
-            Co o spolupráci se mnou říkají zákazníci z automotive a
-            strojírenského průmyslu.
+            Co o spolupráci říkají zákazníci ze strojírenského průmyslu.
           </p>
         </div>
 

@@ -9,7 +9,7 @@ interface Highlight {
 }
 
 const HIGHLIGHTS: Highlight[] = [
-  { icon: ShieldCheck, label: "Automotive standardy" },
+  { icon: ShieldCheck, label: "Soustružení a frézování" },
   { icon: Layers, label: "Zakázková i maloseriová výroba" },
   { icon: MapPin, label: "Frýdlantský výběžek a Liberecko" },
 ];
@@ -37,13 +37,13 @@ export default function HeroSection() {
           </p>
 
           <h1 className="text-3xl font-bold tracking-tight text-white sm:text-4xl md:text-5xl">
-            Vyrábím nástroje a provádím přesné kovoobrábění pro průmysl
+            Výroba nástrojů a přesné kovoobrábění
           </h1>
 
           <p className="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-slate-300 sm:text-lg">
-            Vyrábím nástroje, přípravky a přesné díly pro automotive, provádím
-            zakázkové kovoobrábění a broušení ve své provozovně v Dolní
-            Řasnici na Frýdlantsku.
+            Výroba nástrojů, přípravků a přesných dílů pro průmysl. Soustružení,
+            frézování a zakázkové kovoobrábění v provozovně v Dolní Řasnici na
+            Frýdlantsku.
           </p>
 
           <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">

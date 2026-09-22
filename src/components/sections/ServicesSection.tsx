@@ -1,5 +1,5 @@
 import type { LucideIcon } from "lucide-react";
-import { Check, Cog, Layers, Wrench } from "lucide-react";
+import { Check, Cog, Wrench } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 
@@ -25,7 +25,6 @@ interface ServiceStep {
 const STEP_WIDTHS: { text: string; photo: string }[] = [
   { text: "lg:w-[58%]", photo: "lg:w-[42%]" },
   { text: "lg:w-[52%]", photo: "lg:w-[48%]" },
-  { text: "lg:w-[62%]", photo: "lg:w-[38%]" },
 ];
 
 const SERVICES: ServiceStep[] = [
@@ -33,25 +32,24 @@ const SERVICES: ServiceStep[] = [
     id: "vyroba-nastroju",
     title: "Výroba nástrojů a přípravků",
     description:
-      "Vyrábím technologické, upínací, montážní a kontrolní přípravky pro automotive linky. Zajišťuji kusovou i drobnou nástrojařskou výrobu dle výkresové dokumentace.",
+      "Výroba technologických přípravků pro průmysl. Kusová i drobná nástrojařská výroba dle výkresové dokumentace.",
     specs: [
       "Výroba dle výkresové dokumentace zákazníka",
-      "Upínací a montážní přípravky pro výrobní linky",
-      "Kontrolní a měřicí přípravky",
-      "Konzultace konstrukčního řešení s technologem",
+      "Technologické přípravky pro průmyslovou výrobu",
+      "Kusová i drobná nástrojařská výroba",
     ],
     icon: Wrench,
     imageSrc: "https://picsum.photos/seed/vorlicky-nastroje/1200/900",
     imageLabel: "Nástrojařská výroba",
-    imageCaption: "Detail výroby upínacího přípravku",
+    imageCaption: "Detail nástrojařské výroby",
   },
   {
     id: "presne-kovoobrabeni",
     title: "Přesné kovoobrábění",
     description:
-      "Provádím třískové obrábění kovu, maloseriovou i zakázkovou výrobu součástí s důrazem na vysokou tvarovou a rozměrovou přesnost.",
+      "Kovoobrábění, soustružení, vrtání a frézování. Maloseriová i zakázková výroba součástí s důrazem na vysokou tvarovou a rozměrovou přesnost.",
     specs: [
-      "Soustružení a frézování přesných dílů",
+      "Soustružení, vrtání a frézování přesných dílů",
       "Kusová i maloseriová výroba součástí",
       "Obrábění široké škály konstrukčních materiálů",
       "Výstupní kontrola rozměrů a tolerancí",
@@ -60,22 +58,6 @@ const SERVICES: ServiceStep[] = [
     imageSrc: "https://picsum.photos/seed/vorlicky-obrabeni/1200/900",
     imageLabel: "Kovoobráběcí výroba",
     imageCaption: "Detail obrábění přesné součásti",
-  },
-  {
-    id: "brouseni-ostreni",
-    title: "Broušení a ostření nástrojů",
-    description:
-      "Provádím rovinné a tvarové broušení, renovaci a ostření průmyslových řezných i tvarovacích nástrojů.",
-    specs: [
-      "Rovinné broušení kovových ploch a dílů",
-      "Tvarové broušení dle požadované geometrie",
-      "Renovace opotřebených nástrojů",
-      "Ostření řezných a tvarovacích nástrojů",
-    ],
-    icon: Layers,
-    imageSrc: "https://picsum.photos/seed/vorlicky-brouseni/1200/900",
-    imageLabel: "Broušení nástrojů",
-    imageCaption: "Detail broušení řezného nástroje",
   },
 ];
 
@@ -88,11 +70,12 @@ export default function ServicesSection() {
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-2xl text-center">
           <h2 className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">
-            Moje služby
+            Přesné ruční kovoobrábění a zakázková výroba
           </h2>
           <p className="mt-4 text-base leading-relaxed text-slate-600">
-            Nabízím komplexní nástrojařskou a kovoobráběcí výrobu pod jednou
-            střechou, od výkresu až po hotový precizní díl.
+            Komplexní nástrojařská a kovoobráběcí výroba pod jednou střechou,
+            od výkresu až po hotový precizní díl. Vše v profesionální dílně na
+            profi strojích.
           </p>
         </div>
 
