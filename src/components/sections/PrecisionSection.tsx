@@ -37,22 +37,31 @@ export default function PrecisionSection() {
           </h2>
         </div>
 
-        <div className="mt-14 grid grid-cols-1 gap-12 lg:grid-cols-2">
-          <div className="space-y-5 text-base leading-relaxed text-slate-600">
-            <p>
-              Jmenuji se Jiří Vorlický a přes 30 let vedu zakázkovou
-              nástrojárnu, kterou jsem od nuly vybudoval na poctivém řemesle a
-              maximální přesnosti.
+        <div className="mt-14 grid grid-cols-1 items-start gap-12 lg:grid-cols-2">
+          <div className="rounded-2xl bg-white p-6 shadow-lg ring-1 ring-slate-200 sm:p-8 lg:-mt-8">
+            <p className="text-xs font-semibold uppercase tracking-widest text-blue-600">
+              O nástrojárně
             </p>
-            <p>
-              Dnes dílna disponuje více než 10 nástrojařskými a kovoobráběcími
-              stroji pro frézování, soustružení i broušení.
-            </p>
-            <p>
-              Za tři dekády jsem dodal tisíce přesných dílů a nástrojů pro
-              desítky výrobních podniků po celém Libereckém kraji. Vždy s
-              garancí dodržení termínů a osobním dohledem nad každým výkresem.
-            </p>
+            <h3 className="mt-2 text-xl font-bold tracking-tight text-slate-900">
+              Zakázková nástrojárna s 30letou praxí v Libereckém kraji
+            </h3>
+            <div className="mt-5 space-y-5 text-base leading-relaxed text-slate-600">
+              <p>
+                Jmenuji se Jiří Vorlický a přes 30 let vedu zakázkovou
+                nástrojárnu, kterou jsem od nuly vybudoval na poctivém řemesle
+                a maximální přesnosti.
+              </p>
+              <p>
+                Dnes dílna disponuje více než 10 nástrojařskými a
+                kovoobráběcími stroji pro frézování, soustružení i broušení.
+              </p>
+              <p>
+                Za tři dekády jsem dodal tisíce přesných dílů a nástrojů pro
+                desítky výrobních podniků po celém Libereckém kraji. Vždy s
+                garancí dodržení termínů a osobním dohledem nad každým
+                výkresem.
+              </p>
+            </div>
           </div>
 
           <div className="rounded-2xl bg-slate-900 p-6 shadow-lg sm:p-8">

@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import { useEffect, useState } from "react";
 import * as DialogPrimitive from "@radix-ui/react-dialog";
 import { ChevronLeft, ChevronRight, X, ZoomIn } from "lucide-react";
 
@@ -50,13 +50,60 @@ const MACHINES: MachineItem[] = [
   },
 ];
 
+const MACHINE_COUNT = MACHINES.length;
+
+// Klon poslední a první fotky na okraje pole, aby přechod z posledního
+// na první stroj (a naopak) vypadal jako plynulé pokračování v jednom
+// směru, nikoliv jako skok zpět na začátek.
+const SLIDES: MachineItem[] =
+  MACHINE_COUNT > 1
+    ? [
+        { ...MACHINES[MACHINE_COUNT - 1], id: `${MACHINES[MACHINE_COUNT - 1].id}-clone-start` },
+        ...MACHINES,
+        { ...MACHINES[0], id: `${MACHINES[0].id}-clone-end` },
+      ]
+    : MACHINES;
+
 export default function ReferencesSection() {
-  const [activeIndex, setActiveIndex] = useState(0);
+  const [position, setPosition] = useState(1);
+  const [withTransition, setWithTransition] = useState(true);
   const [zoomedMachine, setZoomedMachine] = useState<MachineItem | null>(null);
 
-  const goTo = useCallback((index: number) => {
-    setActiveIndex((index + MACHINES.length) % MACHINES.length);
-  }, []);
+  const activeIndex = ((position - 1) % MACHINE_COUNT + MACHINE_COUNT) % MACHINE_COUNT;
+
+  const goNext = () => {
+    setWithTransition(true);
+    setPosition((prev) => prev + 1);
+  };
+
+  const goPrev = () => {
+    setWithTransition(true);
+    setPosition((prev) => prev - 1);
+  };
+
+  const goTo = (index: number) => {
+    setWithTransition(true);
+    setPosition(index + 1);
+  };
+
+  // Po doklouzání na klonovaný snímek na okraji se pozice bez animace
+  // přeskočí na odpovídající reálný snímek na druhé straně pole.
+  const handleTransitionEnd = () => {
+    if (position === SLIDES.length - 1) {
+      setWithTransition(false);
+      setPosition(1);
+    } else if (position === 0) {
+      setWithTransition(false);
+      setPosition(MACHINE_COUNT);
+    }
+  };
+
+  useEffect(() => {
+    if (!withTransition) {
+      const raf = requestAnimationFrame(() => setWithTransition(true));
+      return () => cancelAnimationFrame(raf);
+    }
+  }, [withTransition]);
 
   return (
     <section className="bg-slate-50 py-20 sm:py-28">
@@ -74,10 +121,14 @@ export default function ReferencesSection() {
         <div className="mx-auto mt-14 max-w-3xl">
           <div className="relative overflow-hidden rounded-2xl bg-slate-900 shadow-lg">
             <div
-              className="flex transition-transform duration-700 ease-in-out"
-              style={{ transform: `translateX(-${activeIndex * 100}%)` }}
+              onTransitionEnd={handleTransitionEnd}
+              className={cn(
+                "flex",
+                withTransition && "transition-transform duration-700 ease-in-out"
+              )}
+              style={{ transform: `translateX(-${position * 100}%)` }}
             >
-              {MACHINES.map((machine) => (
+              {SLIDES.map((machine) => (
                 <div key={machine.id} className="w-full flex-shrink-0">
                   <button
                     type="button"
@@ -115,7 +166,7 @@ export default function ReferencesSection() {
           <div className="mt-6 flex items-center justify-center gap-6">
             <button
               type="button"
-              onClick={() => goTo(activeIndex - 1)}
+              onClick={goPrev}
               aria-label="Předchozí stroj"
               className="flex h-10 w-10 items-center justify-center rounded-full border border-slate-300 bg-white text-slate-600 transition-colors hover:border-blue-300 hover:text-blue-600"
             >
@@ -139,7 +190,7 @@ export default function ReferencesSection() {
 
             <button
               type="button"
-              onClick={() => goTo(activeIndex + 1)}
+              onClick={goNext}
               aria-label="Další stroj"
               className="flex h-10 w-10 items-center justify-center rounded-full border border-slate-300 bg-white text-slate-600 transition-colors hover:border-blue-300 hover:text-blue-600"
             >
