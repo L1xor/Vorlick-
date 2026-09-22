@@ -120,8 +120,8 @@ export default function ReferencesSection() {
           </p>
         </div>
 
-        <div className="relative mx-auto mt-14 w-full max-w-2xl">
-          <div className="relative h-[360px] w-full overflow-hidden sm:h-[420px]">
+        <div className="relative mx-auto mt-14 w-full max-w-4xl">
+          <div className="relative h-[420px] w-full overflow-hidden sm:h-[520px]">
             <div className="relative flex h-full w-full items-center justify-center">
               {MACHINES.map((machine, index) => {
                 const diff = getCircularDistance(index, currentIndex, MACHINE_COUNT);
@@ -143,7 +143,7 @@ export default function ReferencesSection() {
                     aria-hidden={!isVisible}
                     tabIndex={isVisible ? 0 : -1}
                     className={cn(
-                      "group absolute left-1/2 top-1/2 w-40 -translate-y-1/2 overflow-hidden rounded-2xl bg-slate-900 text-left ring-1 ring-white/5 transition-all duration-500 ease-out sm:w-48",
+                      "group absolute left-1/2 top-1/2 w-56 -translate-y-1/2 overflow-hidden rounded-2xl bg-slate-900 text-left ring-1 ring-white/5 transition-all duration-500 ease-out sm:w-72",
                       isActive && "z-20 -translate-x-1/2 scale-100 opacity-100 shadow-2xl",
                       isPrev && "z-10 -translate-x-[130%] scale-[0.82] opacity-70 shadow-xl",
                       isNext && "z-10 translate-x-[30%] scale-[0.82] opacity-70 shadow-xl",
@@ -156,7 +156,7 @@ export default function ReferencesSection() {
                         src={machine.imageSrc}
                         alt={machine.name}
                         fill
-                        sizes="(max-width: 640px) 160px, 192px"
+                        sizes="(max-width: 640px) 224px, 288px"
                         className="object-cover grayscale contrast-125 brightness-[0.85] transition-transform duration-500 group-hover:scale-105"
                       />
                       <div className="absolute inset-0 bg-blue-950/20 mix-blend-multiply" />
@@ -167,11 +167,11 @@ export default function ReferencesSection() {
                       )}
                     </div>
 
-                    <div className="p-5 sm:p-6">
-                      <h3 className="text-lg font-semibold text-white">
+                    <div className="p-3 sm:p-4">
+                      <h3 className="text-sm font-semibold text-white sm:text-base">
                         {machine.name}
                       </h3>
-                      <p className="mt-2 text-sm leading-relaxed text-slate-400">
+                      <p className="mt-1 text-xs leading-relaxed text-slate-400 sm:text-sm">
                         {machine.description}
                       </p>
                     </div>
