@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import Image from "next/image";
 import * as DialogPrimitive from "@radix-ui/react-dialog";
 import { ChevronLeft, ChevronRight, X, ZoomIn } from "lucide-react";
 
@@ -64,58 +65,47 @@ const MACHINES: MachineItem[] = [
 
 const MACHINE_COUNT = MACHINES.length;
 
-// Klon poslední a první fotky na okraje pole, aby přechod z posledního
-// na první stroj (a naopak) vypadal jako plynulé pokračování v jednom
-// směru, nikoliv jako skok zpět na začátek.
-const SLIDES: MachineItem[] =
-  MACHINE_COUNT > 1
-    ? [
-        { ...MACHINES[MACHINE_COUNT - 1], id: `${MACHINES[MACHINE_COUNT - 1].id}-clone-start` },
-        ...MACHINES,
-        { ...MACHINES[0], id: `${MACHINES[0].id}-clone-end` },
-      ]
-    : MACHINES;
+/**
+ * Spočítá nejkratší cyklickou vzdálenost dané položky od aktivního indexu.
+ * Díky tomu se karty na obou koncích pole plynule "protáčí" jedním směrem
+ * místo skoku zpět na začátek.
+ */
+function getCircularDistance(
+  index: number,
+  currentIndex: number,
+  length: number
+): number {
+  if (length === 0) return 0;
+  let diff = index - currentIndex;
+  const half = length / 2;
+  if (diff > half) diff -= length;
+  if (diff < -half) diff += length;
+  return diff;
+}
 
 export default function ReferencesSection() {
-  const [position, setPosition] = useState(1);
-  const [withTransition, setWithTransition] = useState(true);
+  const [currentIndex, setCurrentIndex] = useState(0);
   const [zoomedMachine, setZoomedMachine] = useState<MachineItem | null>(null);
 
-  const activeIndex = ((position - 1) % MACHINE_COUNT + MACHINE_COUNT) % MACHINE_COUNT;
-
   const goNext = () => {
-    setWithTransition(true);
-    setPosition((prev) => prev + 1);
+    setCurrentIndex((prev) => (prev + 1) % MACHINE_COUNT);
   };
 
   const goPrev = () => {
-    setWithTransition(true);
-    setPosition((prev) => prev - 1);
+    setCurrentIndex((prev) => (prev - 1 + MACHINE_COUNT) % MACHINE_COUNT);
   };
 
   const goTo = (index: number) => {
-    setWithTransition(true);
-    setPosition(index + 1);
+    setCurrentIndex(((index % MACHINE_COUNT) + MACHINE_COUNT) % MACHINE_COUNT);
   };
 
-  // Po doklouzání na klonovaný snímek na okraji se pozice bez animace
-  // přeskočí na odpovídající reálný snímek na druhé straně pole.
-  const handleTransitionEnd = () => {
-    if (position === SLIDES.length - 1) {
-      setWithTransition(false);
-      setPosition(1);
-    } else if (position === 0) {
-      setWithTransition(false);
-      setPosition(MACHINE_COUNT);
+  const handleCardClick = (machine: MachineItem, index: number, diff: number) => {
+    if (diff === 0) {
+      setZoomedMachine(machine);
+    } else if (diff === -1 || diff === 1) {
+      goTo(index);
     }
   };
-
-  useEffect(() => {
-    if (!withTransition) {
-      const raf = requestAnimationFrame(() => setWithTransition(true));
-      return () => cancelAnimationFrame(raf);
-    }
-  }, [withTransition]);
 
   return (
     <section className="bg-slate-50 py-20 sm:py-28">
@@ -130,85 +120,99 @@ export default function ReferencesSection() {
           </p>
         </div>
 
-        <div className="mx-auto mt-14 max-w-sm">
-          <div className="relative overflow-hidden rounded-2xl bg-slate-900 shadow-lg">
-            <div
-              onTransitionEnd={handleTransitionEnd}
-              className={cn(
-                "flex",
-                withTransition && "transition-transform duration-700 ease-in-out"
-              )}
-              style={{ transform: `translateX(-${position * 100}%)` }}
-            >
-              {SLIDES.map((machine) => (
-                <div key={machine.id} className="w-full flex-shrink-0">
+        <div className="relative mx-auto mt-14 max-w-xs sm:max-w-sm">
+          <div className="relative h-[380px] w-full overflow-hidden sm:h-[440px]">
+            <div className="relative flex h-full w-full items-center justify-center">
+              {MACHINES.map((machine, index) => {
+                const diff = getCircularDistance(index, currentIndex, MACHINE_COUNT);
+                const isActive = diff === 0;
+                const isPrev = diff === -1;
+                const isNext = diff === 1;
+                const isVisible = isActive || isPrev || isNext;
+
+                return (
                   <button
+                    key={machine.id}
                     type="button"
-                    onClick={() => setZoomedMachine(machine)}
-                    aria-label={`Zvětšit fotku: ${machine.name}`}
-                    className="group relative block aspect-[3/4] w-full overflow-hidden bg-slate-950"
+                    onClick={() => handleCardClick(machine, index, diff)}
+                    aria-label={
+                      isActive
+                        ? `Zvětšit fotku: ${machine.name}`
+                        : `Zobrazit stroj: ${machine.name}`
+                    }
+                    aria-hidden={!isVisible}
+                    tabIndex={isVisible ? 0 : -1}
+                    className={cn(
+                      "group absolute left-1/2 top-1/2 w-56 -translate-y-1/2 rounded-2xl bg-slate-900 text-left shadow-lg transition-all duration-500 ease-out sm:w-64",
+                      isActive && "z-20 -translate-x-1/2 scale-100 opacity-100",
+                      isPrev && "z-10 -translate-x-[112%] scale-[0.85] opacity-60",
+                      isNext && "z-10 translate-x-[12%] scale-[0.85] opacity-60",
+                      !isVisible &&
+                        "pointer-events-none z-0 -translate-x-1/2 scale-75 opacity-0"
+                    )}
                   >
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={machine.imageSrc}
-                      alt={machine.name}
-                      loading="lazy"
-                      decoding="async"
-                      className="absolute inset-0 h-full w-full object-contain grayscale contrast-125 brightness-[0.85] transition-transform duration-500 group-hover:scale-105"
-                    />
-                    <div className="absolute inset-0 bg-blue-950/20 mix-blend-multiply" />
-                    <div className="absolute inset-0 flex items-center justify-center bg-slate-950/0 transition-colors group-hover:bg-slate-950/30">
-                      <ZoomIn className="h-8 w-8 text-white opacity-0 transition-opacity group-hover:opacity-100" />
+                    <div className="relative aspect-[3/4] w-full overflow-hidden rounded-t-2xl bg-slate-950">
+                      <Image
+                        src={machine.imageSrc}
+                        alt={machine.name}
+                        fill
+                        sizes="(max-width: 640px) 224px, 256px"
+                        className="object-cover grayscale contrast-125 brightness-[0.85] transition-transform duration-500 group-hover:scale-105"
+                      />
+                      <div className="absolute inset-0 bg-blue-950/20 mix-blend-multiply" />
+                      {isActive && (
+                        <div className="absolute inset-0 flex items-center justify-center bg-slate-950/0 transition-colors group-hover:bg-slate-950/30">
+                          <ZoomIn className="h-8 w-8 text-white opacity-0 transition-opacity group-hover:opacity-100" />
+                        </div>
+                      )}
+                    </div>
+
+                    <div className="p-5 sm:p-6">
+                      <h3 className="text-lg font-semibold text-white">
+                        {machine.name}
+                      </h3>
+                      <p className="mt-2 text-sm leading-relaxed text-slate-400">
+                        {machine.description}
+                      </p>
                     </div>
                   </button>
-
-                  <div className="p-6 text-white sm:p-8">
-                    <h3 className="text-lg font-semibold text-white">
-                      {machine.name}
-                    </h3>
-                    <p className="mt-2 text-sm leading-relaxed text-slate-400">
-                      {machine.description}
-                    </p>
-                  </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
 
-          <div className="mt-6 flex items-center justify-center gap-6">
-            <button
-              type="button"
-              onClick={goPrev}
-              aria-label="Předchozí stroj"
-              className="flex h-10 w-10 items-center justify-center rounded-full border border-slate-300 bg-white text-slate-600 transition-colors hover:border-blue-300 hover:text-blue-600"
-            >
-              <ChevronLeft className="h-5 w-5" />
-            </button>
+          <button
+            type="button"
+            onClick={goPrev}
+            aria-label="Předchozí stroj"
+            className="absolute left-0 top-1/2 z-30 flex h-10 w-10 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-slate-300 bg-white text-slate-600 shadow-md transition-colors hover:border-blue-300 hover:text-blue-600"
+          >
+            <ChevronLeft className="h-5 w-5" />
+          </button>
 
-            <div className="flex items-center gap-2">
-              {MACHINES.map((machine, index) => (
-                <button
-                  key={machine.id}
-                  type="button"
-                  onClick={() => goTo(index)}
-                  aria-label={`Zobrazit stroj ${index + 1}`}
-                  className={cn(
-                    "h-2.5 w-2.5 rounded-full transition-colors",
-                    index === activeIndex ? "bg-blue-600" : "bg-slate-300"
-                  )}
-                />
-              ))}
-            </div>
+          <button
+            type="button"
+            onClick={goNext}
+            aria-label="Další stroj"
+            className="absolute right-0 top-1/2 z-30 flex h-10 w-10 -translate-y-1/2 translate-x-1/2 items-center justify-center rounded-full border border-slate-300 bg-white text-slate-600 shadow-md transition-colors hover:border-blue-300 hover:text-blue-600"
+          >
+            <ChevronRight className="h-5 w-5" />
+          </button>
+        </div>
 
+        <div className="mt-8 flex items-center justify-center gap-2">
+          {MACHINES.map((machine, index) => (
             <button
+              key={machine.id}
               type="button"
-              onClick={goNext}
-              aria-label="Další stroj"
-              className="flex h-10 w-10 items-center justify-center rounded-full border border-slate-300 bg-white text-slate-600 transition-colors hover:border-blue-300 hover:text-blue-600"
-            >
-              <ChevronRight className="h-5 w-5" />
-            </button>
-          </div>
+              onClick={() => goTo(index)}
+              aria-label={`Zobrazit stroj ${index + 1}`}
+              className={cn(
+                "h-2.5 w-2.5 rounded-full transition-colors",
+                index === currentIndex ? "bg-blue-600" : "bg-slate-300"
+              )}
+            />
+          ))}
         </div>
       </div>
 
