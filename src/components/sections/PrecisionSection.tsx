@@ -1,4 +1,4 @@
-import { FileSearch, PackageCheck } from "lucide-react";
+import { FileSearch } from "lucide-react";
 
 interface ProcessStep {
   number: string;
@@ -21,9 +21,9 @@ const PROCESS_STEPS: ProcessStep[] = [
   },
   {
     number: "03",
-    title: "Expedice hotových dílů",
+    title: "Balení a doručení",
     description:
-      "Balení a příprava hotových dílů k předání či expedici ve stavu odpovídajícím zadání.",
+      "Výrobek odpovídající zadání osobně zabalím a doručím přímo na zákazníkem určené místo.",
   },
 ];
 
@@ -58,7 +58,7 @@ export default function PrecisionSection() {
           <div className="rounded-2xl bg-slate-900 p-6 shadow-lg sm:p-8">
             <div className="mb-6 flex items-center gap-2 text-sm font-semibold text-slate-400">
               <FileSearch className="h-4 w-4" />
-              Výrobní postup
+              Zakládám si na kvalitě
             </div>
             <ol className="space-y-6">
               {PROCESS_STEPS.map((step, index) => (
@@ -82,10 +82,6 @@ export default function PrecisionSection() {
                 </li>
               ))}
             </ol>
-            <div className="mt-2 flex items-center gap-2 rounded-lg bg-slate-800 p-3 text-sm text-blue-300">
-              <PackageCheck className="h-4 w-4 flex-shrink-0" />
-              <span>Hotové díly se předávají pouze po ověření shody s dokumentací.</span>
-            </div>
           </div>
         </div>
       </div>
