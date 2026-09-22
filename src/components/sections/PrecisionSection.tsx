@@ -1,38 +1,10 @@
-import type { LucideIcon } from "lucide-react";
-import { BadgeCheck, ClipboardCheck, FileSearch, PackageCheck, Settings2 } from "lucide-react";
-
-interface ReliabilityPoint {
-  icon: LucideIcon;
-  title: string;
-  description: string;
-}
+import { FileSearch, PackageCheck } from "lucide-react";
 
 interface ProcessStep {
   number: string;
   title: string;
   description: string;
 }
-
-const RELIABILITY_POINTS: ReliabilityPoint[] = [
-  {
-    icon: BadgeCheck,
-    title: "Dlouholetá praxe v oboru",
-    description:
-      "Dlouholetá praxe v nástrojářské výrobě a kovoobrábění pro strojírenské dodavatele v regionu i mimo něj.",
-  },
-  {
-    icon: Settings2,
-    title: "Flexibilita zakázkové nástrojárny",
-    description:
-      "Přizpůsobení konkrétní poptávce, od jednoho kusu přípravku po opakovanou maloseriovou výrobu součástí.",
-  },
-  {
-    icon: ClipboardCheck,
-    title: "Přísná výstupní kontrola",
-    description:
-      "Každý vyrobený díl prochází kontrolou rozměrů a tvarové přesnosti tak, aby splňoval požadavky výkresové dokumentace.",
-  },
-];
 
 const PROCESS_STEPS: ProcessStep[] = [
   {
@@ -61,34 +33,26 @@ export default function PrecisionSection() {
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-2xl text-center">
           <h2 className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">
-            O nástrojárně a přesnosti výroby
+            Nástrojárna s 30 lety zkušeností | Jiří Vorlický
           </h2>
-          <p className="mt-4 text-base leading-relaxed text-slate-600">
-            Spojení řemeslné zkušenosti s důrazem na přesnost, kterou vyžaduje
-            strojírenský průmysl.
-          </p>
         </div>
 
         <div className="mt-14 grid grid-cols-1 gap-12 lg:grid-cols-2">
-          <div className="space-y-8">
-            {RELIABILITY_POINTS.map((point) => {
-              const Icon = point.icon;
-              return (
-                <div key={point.title} className="flex gap-4">
-                  <div className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-xl bg-slate-900 text-white shadow-sm">
-                    <Icon className="h-5 w-5" />
-                  </div>
-                  <div>
-                    <h3 className="text-base font-semibold text-slate-900">
-                      {point.title}
-                    </h3>
-                    <p className="mt-1.5 text-sm leading-relaxed text-slate-600">
-                      {point.description}
-                    </p>
-                  </div>
-                </div>
-              );
-            })}
+          <div className="space-y-5 text-base leading-relaxed text-slate-600">
+            <p>
+              Jmenuji se Jiří Vorlický a přes 30 let vedu zakázkovou
+              nástrojárnu, kterou jsem od nuly vybudoval na poctivém řemesle a
+              maximální přesnosti.
+            </p>
+            <p>
+              Dnes dílna disponuje více než 10 nástrojařskými a kovoobráběcími
+              stroji pro frézování, soustružení i broušení.
+            </p>
+            <p>
+              Za tři dekády jsem dodal tisíce přesných dílů a nástrojů pro
+              desítky výrobních podniků po celém Libereckém kraji. Vždy s
+              garancí dodržení termínů a osobním dohledem nad každým výkresem.
+            </p>
           </div>
 
           <div className="rounded-2xl bg-slate-900 p-6 shadow-lg sm:p-8">
