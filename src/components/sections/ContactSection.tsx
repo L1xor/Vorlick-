@@ -195,7 +195,7 @@ export default function ContactSection() {
           </h2>
           <p className="mt-4 text-base leading-relaxed text-slate-600">
             Poptávka na výrobu nástroje, přípravku nebo obrobku? Napište nebo
-            zavolejte, pan Vorlický odpoví do 5 pracovních dnů.
+            zavolejte, odpovím do 5 pracovních dnů.
           </p>
         </div>
 
@@ -206,8 +206,8 @@ export default function ContactSection() {
                 Rychlé vyřízení poptávky bez zbytečných průtahů
               </h3>
               <p className="mt-4 text-sm leading-relaxed text-slate-300">
-                Po zaslání výkresové dokumentace a specifikace dílu odpoví pan
-                Vorlický do 5 pracovních dnů.
+                Po zaslání výkresové dokumentace a specifikace dílu odpovím do
+                5 pracovních dnů.
               </p>
 
               <ul className="mt-8 space-y-4">
@@ -241,8 +241,8 @@ export default function ContactSection() {
             <CardHeader>
               <CardTitle>Poptávkový formulář</CardTitle>
               <CardDescription>
-                Vyplňte základní údaje a stručně popište zadání. Pan Vorlický
-                odpoví do 5 pracovních dnů.
+                Vyplňte základní údaje a stručně popište zadání. Odpovím do
+                5 pracovních dnů.
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -254,8 +254,8 @@ export default function ContactSection() {
                       Poptávka byla úspěšně odeslána
                     </p>
                     <p className="mt-2 text-sm text-slate-600">
-                      Děkujeme za váš zájem. Pan Vorlický odpoví na uvedený
-                      kontakt do 5 pracovních dnů.
+                      Děkuji za váš zájem. Odpovím na uvedený kontakt do 5
+                      pracovních dnů.
                     </p>
                   </div>
                   <Button variant="outline" onClick={handleNewInquiry}>
