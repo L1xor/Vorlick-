@@ -54,6 +54,7 @@ interface ContactFormState {
   errors: ContactFormErrors;
   isSubmitting: boolean;
   isSuccess: boolean;
+  submitError: string | null;
 }
 
 interface QuickHighlight {
@@ -73,6 +74,8 @@ const PHONE_HREF = "tel:+420606265474";
 const EMAIL_ADDRESS = "kovovorlicky@seznam.cz";
 const EMAIL_HREF = "mailto:kovovorlicky@seznam.cz";
 
+const WEB3FORMS_ACCESS_KEY = process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY;
+
 const QUICK_HIGHLIGHTS: QuickHighlight[] = [
   { icon: ShieldCheck, label: "Soustružení a frézování" },
   { icon: Layers, label: "Zakázková i maloseriová výroba" },
@@ -83,7 +86,7 @@ function validateForm(data: ContactFormData): ContactFormErrors {
   const errors: ContactFormErrors = {};
 
   if (data.name.trim().length < 2) {
-    errors.name = "Zadejte prosím jméno a příjmení nebo název firmy.";
+    errors.name = "Zadejte prosím jméno a příjmení.";
   }
 
   const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -104,6 +107,7 @@ export default function ContactSection() {
     errors: {},
     isSubmitting: false,
     isSuccess: false,
+    submitError: null,
   });
 
   const handleChange = (field: keyof ContactFormData) =>
@@ -114,44 +118,76 @@ export default function ContactSection() {
       }));
     };
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const errors = validateForm(state.data);
 
     if (Object.keys(errors).length > 0) {
-      setState((prev) => ({ ...prev, errors }));
+      setState((prev) => ({ ...prev, errors, submitError: null }));
       return;
     }
 
-    setState((prev) => ({ ...prev, errors: {}, isSubmitting: true }));
+    if (!WEB3FORMS_ACCESS_KEY) {
+      setState((prev) => ({
+        ...prev,
+        submitError:
+          "Formulář není správně nakonfigurován. Kontaktujte nás prosím telefonicky nebo e-mailem.",
+      }));
+      return;
+    }
 
-    // MOCK REŽIM: síťové volání je simulováno pomocí setTimeout.
-    // Po napojení na Web3Forms nahraďte simulaci níže tímto voláním:
-    //
-    // const response = await fetch("https://api.web3forms.com/submit", {
-    //   method: "POST",
-    //   headers: { "Content-Type": "application/json" },
-    //   body: JSON.stringify({
-    //     access_key: process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY,
-    //     subject: "Nová poptávka z webu - Jiří Vorlický",
-    //     from_name: state.data.name,
-    //     email: state.data.email,
-    //     phone: state.data.phone,
-    //     message: state.data.message,
-    //   }),
-    // });
-    // const result = await response.json();
-    // if (!result.success) { /* zpracování chyby */ }
+    setState((prev) => ({
+      ...prev,
+      errors: {},
+      submitError: null,
+      isSubmitting: true,
+    }));
 
-    setTimeout(() => {
+    const formData = new FormData();
+    formData.append("access_key", WEB3FORMS_ACCESS_KEY);
+    formData.append("subject", "Nová poptávka z webu - Jiří Vorlický");
+    formData.append("name", state.data.name.trim());
+    formData.append("email", state.data.email.trim());
+    formData.append("message", state.data.message.trim());
+
+    if (state.data.phone.trim()) {
+      formData.append("phone", state.data.phone.trim());
+    }
+
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        body: formData,
+      });
+
+      const result = (await response.json()) as { success?: boolean; message?: string };
+
+      if (!response.ok || !result.success) {
+        setState((prev) => ({
+          ...prev,
+          isSubmitting: false,
+          submitError:
+            "Odeslání poptávky se nezdařilo. Zkuste to prosím znovu, nebo nás kontaktujte telefonicky.",
+        }));
+        return;
+      }
+
       setState({
         data: INITIAL_FORM_DATA,
         errors: {},
         isSubmitting: false,
         isSuccess: true,
+        submitError: null,
       });
-    }, 1000);
+    } catch {
+      setState((prev) => ({
+        ...prev,
+        isSubmitting: false,
+        submitError:
+          "Odeslání poptávky se nezdařilo. Zkuste to prosím znovu, nebo nás kontaktujte telefonicky.",
+      }));
+    }
   };
 
   const handleNewInquiry = () => {
@@ -160,6 +196,7 @@ export default function ContactSection() {
       errors: {},
       isSubmitting: false,
       isSuccess: false,
+      submitError: null,
     });
   };
 
@@ -244,13 +281,11 @@ export default function ContactSection() {
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-5" noValidate>
                   <div className="space-y-2">
-                    <Label htmlFor="name">
-                      Jméno a příjmení nebo název firmy
-                    </Label>
+                    <Label htmlFor="name">Jméno a příjmení</Label>
                     <Input
                       id="name"
                       name="name"
-                      placeholder="Např. Jan Novák nebo Novák strojírny s.r.o."
+                      placeholder="Např. Jan Novák"
                       value={state.data.name}
                       onChange={handleChange("name")}
                       aria-invalid={Boolean(state.errors.name)}
@@ -299,7 +334,7 @@ export default function ContactSection() {
                     <Textarea
                       id="message"
                       name="message"
-                      placeholder="Popište prosím typ dílu, materiál, množství a případně termín poptávky."
+                      placeholder="Popište prosím typ dílu, materiál, množství, případně název firmy a termín poptávky."
                       value={state.data.message}
                       onChange={handleChange("message")}
                       aria-invalid={Boolean(state.errors.message)}
@@ -325,6 +360,12 @@ export default function ContactSection() {
                       .
                     </span>
                   </div>
+
+                  {state.submitError && (
+                    <p className="rounded-lg bg-red-50 px-4 py-3 text-sm text-red-600">
+                      {state.submitError}
+                    </p>
+                  )}
 
                   <Button
                     type="submit"
