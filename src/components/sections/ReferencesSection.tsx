@@ -115,10 +115,10 @@ export default function ReferencesSection() {
             Strojní vybavení
           </h2>
           <p className="mt-4 text-base leading-relaxed text-slate-600">
-            Nástrojařské a kovoobráběcí stroje, na kterých se v dílně pracuje
-            už řadu let. Ověřené vybavení pro frézování, soustružení, vrtání i
-            broušení, díky kterému lze každou zakázku zpracovat s důrazem na
-            přesnost, spolehlivost a kvalitu hotového dílu.
+            Nástrojařské a kovoobráběcí stroje, na kterých v mé dílně pracuji už
+            řadu let. Díky tomuto ověřenému vybavení pro frézování, soustružení,
+            vrtání i broušení zpracuji každou zakázku s důrazem na přesnost,
+            spolehlivost a kvalitu hotového dílu.
           </p>
         </div>
 
