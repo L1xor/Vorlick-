@@ -43,7 +43,6 @@ interface ContactFormData {
 interface ContactFormErrors {
   name?: string;
   email?: string;
-  message?: string;
 }
 
 /**
@@ -136,10 +135,7 @@ export default function ContactSection() {
     formData.append("subject", "Nová poptávka z webu - Jiří Vorlický");
     formData.append("name", state.data.name.trim());
     formData.append("email", state.data.email.trim());
-    const message = state.data.message.trim();
-    if (message) {
-      formData.append("message", message);
-    }
+    formData.append("poznamka", state.data.message);
 
     if (state.data.phone.trim()) {
       formData.append("phone", state.data.phone.trim());
@@ -318,20 +314,14 @@ export default function ContactSection() {
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="message">Poznámka (nepovinné)</Label>
+                    <Label htmlFor="poznamka">Poznámka (nepovinné)</Label>
                     <Textarea
-                      id="message"
-                      name="message"
-                      placeholder="Volitelná poznámka k poptávce, např. typ dílu, materiál, název firmy nebo termín."
+                      id="poznamka"
+                      name="poznamka"
+                      placeholder="Volitelná poznámka k poptávce."
                       value={state.data.message}
                       onChange={handleChange("message")}
-                      aria-invalid={Boolean(state.errors.message)}
                     />
-                    {state.errors.message && (
-                      <p className="text-sm text-red-600">
-                        {state.errors.message}
-                      </p>
-                    )}
                   </div>
 
                   <div className="flex items-start gap-2 rounded-lg bg-slate-50 p-3 text-sm text-slate-600">
