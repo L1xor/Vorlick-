@@ -112,11 +112,13 @@ export default function ReferencesSection() {
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-2xl text-center">
           <h2 className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">
-            Flotila strojů
+            Strojní vybavení
           </h2>
           <p className="mt-4 text-base leading-relaxed text-slate-600">
-            Přehled nástrojařských a kovoobráběcích strojů v dílně. Fotky a
-            popisky budou postupně doplněny.
+            Nástrojařské a kovoobráběcí stroje, na kterých se v dílně pracuje
+            už řadu let. Ověřené vybavení pro frézování, soustružení, vrtání i
+            broušení, díky kterému lze každou zakázku zpracovat s důrazem na
+            přesnost, spolehlivost a kvalitu hotového dílu.
           </p>
         </div>
 
@@ -157,7 +159,7 @@ export default function ReferencesSection() {
                         alt={machine.name}
                         fill
                         sizes="(max-width: 640px) 224px, 288px"
-                        className="object-cover grayscale contrast-125 brightness-[0.85] transition-transform duration-500 group-hover:scale-105"
+                        className="object-cover transition-transform duration-500 group-hover:scale-105"
                       />
                       <div className="absolute inset-0 bg-blue-950/20 mix-blend-multiply" />
                       {isActive && (
