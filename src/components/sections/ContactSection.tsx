@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import type { FormEvent } from "react";
+import Link from "next/link";
 import {
   CheckCircle2,
   Layers,
@@ -346,7 +347,15 @@ export default function ContactSection() {
 
                   <p className="text-center text-xs leading-relaxed text-slate-500">
                     Odesláním formuláře berete na vědomí zpracování osobních
-                    údajů za účelem vyřízení vaší poptávky.
+                    údajů za účelem vyřízení vaší poptávky. Více informací
+                    naleznete v{" "}
+                    <Link
+                      href="/zasady-zpracovani-osobnich-udaju"
+                      className="font-medium text-blue-600 hover:underline"
+                    >
+                      Zásadách zpracování osobních údajů
+                    </Link>
+                    .
                   </p>
                 </form>
               )}

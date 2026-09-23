@@ -13,10 +13,10 @@ interface FooterContactItem {
 }
 
 const NAV_LINKS: FooterNavLink[] = [
-  { href: "#", label: "Úvod" },
-  { href: "#sluzby", label: "Služby" },
-  { href: "#o-nas", label: "O nástrojárně" },
-  { href: "#kontakt", label: "Poptávka" },
+  { href: "/", label: "Úvod" },
+  { href: "/#sluzby", label: "Služby" },
+  { href: "/#o-nas", label: "O nástrojárně" },
+  { href: "/#kontakt", label: "Poptávka" },
 ];
 
 const CONTACT_ITEMS: FooterContactItem[] = [

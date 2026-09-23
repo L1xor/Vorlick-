@@ -19,9 +19,9 @@ interface NavLink {
 }
 
 const NAV_LINKS: NavLink[] = [
-  { href: "#sluzby", label: "Služby" },
-  { href: "#o-nas", label: "O nástrojárně" },
-  { href: "#kontakt", label: "Kontakt" },
+  { href: "/#sluzby", label: "Služby" },
+  { href: "/#o-nas", label: "O nástrojárně" },
+  { href: "/#kontakt", label: "Kontakt" },
 ];
 
 const PHONE_NUMBER = "+420 606 265 474";
@@ -33,7 +33,7 @@ export default function Navbar() {
   return (
     <header className="fixed top-0 z-50 w-full border-b border-slate-200 bg-white/90 backdrop-blur">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6 lg:px-8">
-        <Link href="#" className="flex flex-col leading-tight">
+        <Link href="/" className="flex flex-col leading-tight">
           <span className="text-base font-bold tracking-tight text-slate-900 sm:text-lg">
             Jiří Vorlický
           </span>
