@@ -144,7 +144,7 @@ export default function ServicesSection() {
                         alt={service.imageCaption}
                         loading="lazy"
                         decoding="async"
-                        className="absolute inset-0 h-full w-full object-cover grayscale contrast-125 brightness-[0.6]"
+                        className="absolute inset-0 h-full w-full object-cover"
                       />
                       <div className="absolute inset-0 bg-blue-950/30 mix-blend-multiply" />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent" />
