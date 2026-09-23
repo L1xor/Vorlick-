@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import Image from "next/image";
-import * as DialogPrimitive from "@radix-ui/react-dialog";
 import { ChevronLeft, ChevronRight, X, ZoomIn } from "lucide-react";
 
 import { cn } from "@/lib/utils";
@@ -66,6 +66,57 @@ const MACHINES: MachineItem[] = [
 const MACHINE_COUNT = MACHINES.length;
 
 /**
+ * Jednoduchý obdélník v souřadnicích viewportu, ze kterého a do kterého
+ * animujeme zvětšenou fotku (FLIP technika – transformace přes translate
+ * a scale, aby byl přechod plynulý a bez sekání).
+ */
+interface BoxRect {
+  top: number;
+  left: number;
+  width: number;
+  height: number;
+}
+
+interface LightboxState {
+  machine: MachineItem;
+  originRect: BoxRect;
+  targetRect: BoxRect;
+  phase: "opening" | "open" | "closing";
+}
+
+const LIGHTBOX_TRANSITION_MS = 480;
+
+function getTargetRect(): BoxRect {
+  const viewportW = window.innerWidth;
+  const viewportH = window.innerHeight;
+  const maxWidth = Math.min(viewportW * 0.9, 640);
+  const maxHeight = Math.min(viewportH * 0.82, 820);
+
+  let width = maxWidth;
+  let height = (width * 4) / 3;
+
+  if (height > maxHeight) {
+    height = maxHeight;
+    width = (height * 3) / 4;
+  }
+
+  return {
+    width,
+    height,
+    top: (viewportH - height) / 2,
+    left: (viewportW - width) / 2,
+  };
+}
+
+function getFlipTransform(from: BoxRect, to: BoxRect): string {
+  const scaleX = from.width / to.width;
+  const scaleY = from.height / to.height;
+  const translateX = from.left - to.left;
+  const translateY = from.top - to.top;
+  return `translate(${translateX}px, ${translateY}px) scale(${scaleX}, ${scaleY})`;
+}
+
+/**
  * Spočítá nejkratší cyklickou vzdálenost dané položky od aktivního indexu.
  * Díky tomu se karty na obou koncích pole plynule "protáčí" jedním směrem
  * místo skoku zpět na začátek.
@@ -85,7 +136,8 @@ function getCircularDistance(
 
 export default function ReferencesSection() {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [zoomedMachine, setZoomedMachine] = useState<MachineItem | null>(null);
+  const [lightbox, setLightbox] = useState<LightboxState | null>(null);
+  const imageRefs = useRef<Record<string, HTMLDivElement | null>>({});
 
   const goNext = () => {
     setCurrentIndex((prev) => (prev + 1) % MACHINE_COUNT);
@@ -99,16 +151,71 @@ export default function ReferencesSection() {
     setCurrentIndex(((index % MACHINE_COUNT) + MACHINE_COUNT) % MACHINE_COUNT);
   };
 
+  const openLightbox = (machine: MachineItem) => {
+    const node = imageRefs.current[machine.id];
+    if (!node) return;
+
+    const rect = node.getBoundingClientRect();
+    setLightbox({
+      machine,
+      originRect: {
+        top: rect.top,
+        left: rect.left,
+        width: rect.width,
+        height: rect.height,
+      },
+      targetRect: getTargetRect(),
+      phase: "opening",
+    });
+  };
+
+  const closeLightbox = () => {
+    setLightbox((prev) => (prev ? { ...prev, phase: "closing" } : prev));
+  };
+
   const handleCardClick = (machine: MachineItem, index: number, diff: number) => {
     if (diff === 0) {
-      setZoomedMachine(machine);
+      openLightbox(machine);
     } else if (diff === -1 || diff === 1) {
       goTo(index);
     }
   };
 
+  // Po vložení do DOM v "origin" pozici přepneme na další snímek na "open",
+  // což spustí CSS přechod směrem k cílové zvětšené velikosti.
+  useEffect(() => {
+    if (lightbox?.phase === "opening") {
+      const raf = requestAnimationFrame(() => {
+        setLightbox((prev) =>
+          prev && prev.phase === "opening" ? { ...prev, phase: "open" } : prev
+        );
+      });
+      return () => cancelAnimationFrame(raf);
+    }
+  }, [lightbox?.phase]);
+
+  // Uzamčení scrollu stránky a zavírání klávesou Escape, dokud je lightbox otevřený.
+  useEffect(() => {
+    if (!lightbox) return;
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        closeLightbox();
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [lightbox]);
+
   return (
-    <section className="bg-white py-20 sm:py-28">
+    <section id="stroje" className="bg-white py-20 sm:py-28">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-2xl text-center">
           <h2 className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">
@@ -153,13 +260,23 @@ export default function ReferencesSection() {
                         "pointer-events-none z-0 -translate-x-1/2 scale-75 opacity-0"
                     )}
                   >
-                    <div className="relative aspect-[3/4] w-full bg-slate-950">
+                    <div
+                      ref={(node) => {
+                        imageRefs.current[machine.id] = node;
+                      }}
+                      className="relative aspect-[3/4] w-full bg-slate-950"
+                    >
                       <Image
                         src={machine.imageSrc}
                         alt={machine.name}
                         fill
                         sizes="(max-width: 640px) 224px, 288px"
-                        className="object-cover transition-transform duration-500 group-hover:scale-105"
+                        className={cn(
+                          "object-cover transition-transform duration-500 group-hover:scale-105",
+                          lightbox?.machine.id === machine.id &&
+                            lightbox.phase !== "closing" &&
+                            "opacity-0"
+                        )}
                       />
                       <div className="absolute inset-0 bg-blue-950/20 mix-blend-multiply" />
                       {isActive && (
@@ -218,48 +335,95 @@ export default function ReferencesSection() {
         </div>
       </div>
 
-      <DialogPrimitive.Root
-        open={zoomedMachine !== null}
-        onOpenChange={(open) => {
-          if (!open) setZoomedMachine(null);
-        }}
-      >
-        <DialogPrimitive.Portal>
-          <DialogPrimitive.Overlay className="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-sm data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0" />
-          <DialogPrimitive.Content
-            className="fixed left-1/2 top-1/2 z-50 w-[92vw] max-w-4xl -translate-x-1/2 -translate-y-1/2 focus:outline-none data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95"
-            aria-describedby={undefined}
+      {lightbox &&
+        createPortal(
+          <div
+            className="fixed inset-0 z-50"
+            role="dialog"
+            aria-modal="true"
+            aria-label={lightbox.machine.name}
           >
-            <DialogPrimitive.Title className="sr-only">
-              {zoomedMachine?.name ?? "Fotka stroje"}
-            </DialogPrimitive.Title>
-            {zoomedMachine && (
-              <div className="relative overflow-hidden rounded-2xl bg-slate-900 shadow-2xl">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={zoomedMachine.imageSrc}
-                  alt={zoomedMachine.name}
-                  className="max-h-[80vh] w-full object-contain"
-                />
-                <div className="p-5 sm:p-6">
-                  <p className="text-base font-semibold text-white">
-                    {zoomedMachine.name}
-                  </p>
-                  <p className="mt-1 text-sm text-slate-400">
-                    {zoomedMachine.description}
-                  </p>
-                </div>
-              </div>
-            )}
-            <DialogPrimitive.Close
+            <div
+              onClick={closeLightbox}
+              className={cn(
+                "absolute inset-0 bg-slate-950/85 backdrop-blur-sm transition-opacity",
+                lightbox.phase === "open" ? "opacity-100" : "opacity-0"
+              )}
+              style={{ transitionDuration: `${LIGHTBOX_TRANSITION_MS}ms` }}
+              aria-hidden="true"
+            />
+
+            <div
+              onTransitionEnd={() => {
+                if (lightbox.phase === "closing") setLightbox(null);
+              }}
+              style={{
+                top: lightbox.targetRect.top,
+                left: lightbox.targetRect.left,
+                width: lightbox.targetRect.width,
+                height: lightbox.targetRect.height,
+                transform:
+                  lightbox.phase === "open"
+                    ? "translate(0, 0) scale(1, 1)"
+                    : getFlipTransform(lightbox.originRect, lightbox.targetRect),
+                transformOrigin: "top left",
+                transitionDuration: `${LIGHTBOX_TRANSITION_MS}ms`,
+              }}
+              className="absolute overflow-hidden rounded-2xl bg-slate-900 shadow-2xl transition-transform ease-[cubic-bezier(0.22,1,0.36,1)] will-change-transform"
+            >
+              <Image
+                src={lightbox.machine.imageSrc}
+                alt={lightbox.machine.name}
+                fill
+                sizes="640px"
+                priority
+                className="object-cover"
+              />
+            </div>
+
+            <div
+              style={{
+                top: lightbox.targetRect.top + lightbox.targetRect.height + 16,
+                left: lightbox.targetRect.left,
+                width: lightbox.targetRect.width,
+                transitionDelay: lightbox.phase === "open" ? "200ms" : "0ms",
+              }}
+              className={cn(
+                "absolute rounded-xl bg-slate-900/95 p-4 text-left shadow-lg transition-opacity duration-300",
+                lightbox.phase === "open"
+                  ? "opacity-100"
+                  : "pointer-events-none opacity-0"
+              )}
+            >
+              <p className="text-base font-semibold text-white">
+                {lightbox.machine.name}
+              </p>
+              <p className="mt-1 text-sm text-slate-400">
+                {lightbox.machine.description}
+              </p>
+            </div>
+
+            <button
+              type="button"
+              onClick={closeLightbox}
               aria-label="Zavřít zvětšenou fotku"
-              className="absolute -right-3 -top-3 flex h-10 w-10 items-center justify-center rounded-full bg-white text-slate-900 shadow-lg transition-colors hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-600"
+              style={{
+                top: lightbox.targetRect.top - 16,
+                left: lightbox.targetRect.left + lightbox.targetRect.width - 16,
+                transitionDelay: lightbox.phase === "open" ? "150ms" : "0ms",
+              }}
+              className={cn(
+                "absolute flex h-10 w-10 items-center justify-center rounded-full bg-white text-slate-900 shadow-lg transition-opacity duration-300 hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-600",
+                lightbox.phase === "open"
+                  ? "opacity-100"
+                  : "pointer-events-none opacity-0"
+              )}
             >
               <X className="h-5 w-5" />
-            </DialogPrimitive.Close>
-          </DialogPrimitive.Content>
-        </DialogPrimitive.Portal>
-      </DialogPrimitive.Root>
+            </button>
+          </div>,
+          document.body
+        )}
     </section>
   );
 }
