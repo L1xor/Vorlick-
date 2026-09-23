@@ -94,10 +94,6 @@ function validateForm(data: ContactFormData): ContactFormErrors {
     errors.email = "Zadejte prosím platnou e-mailovou adresu.";
   }
 
-  if (data.message.trim().length < 10) {
-    errors.message = "Popište prosím poptávku alespoň v jedné souvislé větě.";
-  }
-
   return errors;
 }
 
@@ -140,7 +136,10 @@ export default function ContactSection() {
     formData.append("subject", "Nová poptávka z webu - Jiří Vorlický");
     formData.append("name", state.data.name.trim());
     formData.append("email", state.data.email.trim());
-    formData.append("message", state.data.message.trim());
+    const message = state.data.message.trim();
+    if (message) {
+      formData.append("message", message);
+    }
 
     if (state.data.phone.trim()) {
       formData.append("phone", state.data.phone.trim());
@@ -319,13 +318,11 @@ export default function ContactSection() {
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="message">
-                      Zadání poptávky a specifikace dílu
-                    </Label>
+                    <Label htmlFor="message">Poznámka (nepovinné)</Label>
                     <Textarea
                       id="message"
                       name="message"
-                      placeholder="Popište prosím typ dílu, materiál, množství, případně název firmy a termín poptávky."
+                      placeholder="Volitelná poznámka k poptávce, např. typ dílu, materiál, název firmy nebo termín."
                       value={state.data.message}
                       onChange={handleChange("message")}
                       aria-invalid={Boolean(state.errors.message)}
