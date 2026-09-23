@@ -74,7 +74,7 @@ const PHONE_HREF = "tel:+420606265474";
 const EMAIL_ADDRESS = "kovovorlicky@seznam.cz";
 const EMAIL_HREF = "mailto:kovovorlicky@seznam.cz";
 
-const WEB3FORMS_ACCESS_KEY = process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY;
+const WEB3FORMS_ACCESS_KEY = "6e65a02b-daf4-4461-b664-e4f18d0a0bbb";
 
 const QUICK_HIGHLIGHTS: QuickHighlight[] = [
   { icon: ShieldCheck, label: "Soustružení a frézování" },
@@ -125,15 +125,6 @@ export default function ContactSection() {
 
     if (Object.keys(errors).length > 0) {
       setState((prev) => ({ ...prev, errors, submitError: null }));
-      return;
-    }
-
-    if (!WEB3FORMS_ACCESS_KEY) {
-      setState((prev) => ({
-        ...prev,
-        submitError:
-          "Formulář není správně nakonfigurován. Kontaktujte nás prosím telefonicky nebo e-mailem.",
-      }));
       return;
     }
 
