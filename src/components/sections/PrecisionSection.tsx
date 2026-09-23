@@ -37,7 +37,7 @@ export default function PrecisionSection() {
           </h2>
         </div>
 
-        <div className="mt-14 grid grid-cols-1 items-start gap-12 lg:grid-cols-2">
+        <div className="mt-20 grid grid-cols-1 items-start gap-12 sm:mt-24 lg:grid-cols-2">
           <div className="rounded-2xl bg-white p-6 shadow-lg ring-1 ring-slate-200 sm:p-8 lg:-mt-10">
             <p className="text-xs font-semibold uppercase tracking-widest text-blue-600">
               O nástrojárně
