@@ -39,9 +39,9 @@ const SERVICES: ServiceStep[] = [
       "Kusová i drobná nástrojařská výroba",
     ],
     icon: Wrench,
-    imageSrc: "https://picsum.photos/seed/vorlicky-nastroje/1200/900",
+    imageSrc: "/services/vykresy.jpg",
     imageLabel: "Nástrojařská výroba",
-    imageCaption: "Detail nástrojařské výroby",
+    imageCaption: "Výkresová dokumentace a nástrojařská výroba",
   },
   {
     id: "presne-kovoobrabeni",
@@ -55,9 +55,9 @@ const SERVICES: ServiceStep[] = [
       "Výstupní kontrola rozměrů a tolerancí",
     ],
     icon: Cog,
-    imageSrc: "https://picsum.photos/seed/vorlicky-obrabeni/1200/900",
+    imageSrc: "/services/frezka.jpg",
     imageLabel: "Kovoobráběcí výroba",
-    imageCaption: "Detail obrábění přesné součásti",
+    imageCaption: "Frézování a přesné kovoobrábění",
   },
 ];
 
@@ -94,12 +94,6 @@ export default function ServicesSection() {
 
               return (
                 <div key={service.id} className="relative">
-                  {/* Technický uzel na vodicí lince */}
-                  <div
-                    aria-hidden="true"
-                    className="absolute left-6 top-10 z-30 h-3 w-3 -translate-x-1/2 -translate-y-1/2 rounded-full bg-blue-600 ring-4 ring-white lg:left-1/2 lg:top-1/2"
-                  />
-
                   <div
                     className={cn(
                       "flex flex-col lg:flex-row lg:items-stretch",
