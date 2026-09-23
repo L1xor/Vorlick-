@@ -84,13 +84,28 @@ interface LightboxState {
   phase: "opening" | "open" | "closing";
 }
 
-const LIGHTBOX_TRANSITION_MS = 480;
+const LIGHTBOX_TRANSITION_MS = 420;
+const LIGHTBOX_IMAGE_WIDTH = 480;
+
+// Rezervy okolo fotky, aby se do viewportu vešlo i zavírací tlačítko
+// (nad fotkou) a popisek stroje (pod fotkou), bez přetečení mimo obrazovku.
+const TOP_CLEARANCE = 84;
+const BOTTOM_CLEARANCE = 24;
+const CAPTION_GAP = 12;
+const CAPTION_HEIGHT_ESTIMATE = 96;
 
 function getTargetRect(): BoxRect {
   const viewportW = window.innerWidth;
   const viewportH = window.innerHeight;
-  const maxWidth = Math.min(viewportW * 0.9, 640);
-  const maxHeight = Math.min(viewportH * 0.82, 820);
+
+  const maxWidth = Math.min(viewportW * 0.82, LIGHTBOX_IMAGE_WIDTH);
+  const availableHeight =
+    viewportH -
+    TOP_CLEARANCE -
+    BOTTOM_CLEARANCE -
+    CAPTION_GAP -
+    CAPTION_HEIGHT_ESTIMATE;
+  const maxHeight = Math.max(180, Math.min(availableHeight, 560));
 
   let width = maxWidth;
   let height = (width * 4) / 3;
@@ -100,10 +115,13 @@ function getTargetRect(): BoxRect {
     width = (height * 3) / 4;
   }
 
+  const blockHeight = height + CAPTION_GAP + CAPTION_HEIGHT_ESTIMATE;
+  const blockTop = Math.max(TOP_CLEARANCE, (viewportH - blockHeight) / 2);
+
   return {
     width,
     height,
-    top: (viewportH - height) / 2,
+    top: blockTop,
     left: (viewportW - width) / 2,
   };
 }
@@ -214,8 +232,31 @@ export default function ReferencesSection() {
     };
   }, [lightbox]);
 
+  const activeMachine = MACHINES[currentIndex];
+
   return (
     <section id="stroje" className="bg-white py-20 sm:py-28">
+      {/*
+        Skrytý předběžný fetch fotky aktuálního stroje ve velikosti, v jaké
+        se zobrazí v lightboxu. Next.js tak stihne vygenerovat a nacachovat
+        zvětšenou variantu ještě před kliknutím, takže se lightbox otevře
+        bez čekání na dotažení obrázku.
+      */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute h-0 w-0 overflow-hidden opacity-0"
+      >
+        <Image
+          key={activeMachine.id}
+          src={activeMachine.imageSrc}
+          alt=""
+          width={LIGHTBOX_IMAGE_WIDTH}
+          height={Math.round((LIGHTBOX_IMAGE_WIDTH * 4) / 3)}
+          sizes={`${LIGHTBOX_IMAGE_WIDTH}px`}
+          priority
+        />
+      </div>
+
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-2xl text-center">
           <h2 className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">
@@ -375,7 +416,7 @@ export default function ReferencesSection() {
                 src={lightbox.machine.imageSrc}
                 alt={lightbox.machine.name}
                 fill
-                sizes="640px"
+                sizes={`${LIGHTBOX_IMAGE_WIDTH}px`}
                 priority
                 className="object-cover"
               />
