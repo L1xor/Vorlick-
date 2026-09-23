@@ -19,12 +19,9 @@ export default function PrivacyPolicyPage() {
     <>
       <Navbar />
       <main className="pt-16">
-        <section className="bg-slate-50 py-16 sm:py-20">
-          <div className="mx-auto max-w-3xl px-4 text-center sm:px-6 lg:px-8">
-            <p className="text-xs font-semibold uppercase tracking-widest text-blue-600">
-              Ochrana osobních údajů
-            </p>
-            <h1 className="mt-3 text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">
+        <section className="bg-white py-16 sm:py-20">
+          <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+            <h1 className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">
               Zásady zpracování osobních údajů
             </h1>
             <p className="mt-4 text-base leading-relaxed text-slate-600">
@@ -32,12 +29,8 @@ export default function PrivacyPolicyPage() {
               údaje v souvislosti s provozem webových stránek a vyřizováním
               poptávek zákazníků.
             </p>
-          </div>
-        </section>
 
-        <section className="bg-white py-16 sm:py-20">
-          <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
-            <div className="space-y-10 text-sm leading-relaxed text-slate-600 sm:text-base">
+            <div className="mt-10 space-y-10 text-sm leading-relaxed text-slate-600 sm:text-base">
               <div>
                 <h2 className="text-lg font-bold text-slate-900">
                   1. Správce osobních údajů
