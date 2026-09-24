@@ -73,7 +73,7 @@ const PHONE_HREF = "tel:+420606265474";
 const EMAIL_ADDRESS = "kovovorlicky@seznam.cz";
 const EMAIL_HREF = "mailto:kovovorlicky@seznam.cz";
 
-const WEB3FORMS_ACCESS_KEY = "6e65a02b-daf4-4461-b664-e4f18d0a0bbb";
+const WEB3FORMS_ACCESS_KEY = "eabb1d5b-e52f-4c08-b654-b59197ac68a3";
 
 const QUICK_HIGHLIGHTS: QuickHighlight[] = [
   { icon: ShieldCheck, label: "Soustružení a frézování" },
