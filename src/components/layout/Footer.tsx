@@ -54,7 +54,7 @@ export default function Footer() {
             </p>
             <p className="mt-4 text-sm leading-relaxed text-slate-400">
               Výroba nástrojů, přípravků a přesné kovoobrábění včetně soustružení
-              a frézování pro strojírenský průmysl na Frýdlantsku.
+              a frézování pro strojírenský průmysl v celém Libereckém kraji.
             </p>
             <div className="mt-6 space-y-1 text-xs text-slate-500">
               <p>IČO: 49898213</p>

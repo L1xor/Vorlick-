@@ -11,7 +11,7 @@ interface Highlight {
 const HIGHLIGHTS: Highlight[] = [
   { icon: ShieldCheck, label: "Soustružení a frézování" },
   { icon: Layers, label: "Zakázková i maloseriová výroba" },
-  { icon: MapPin, label: "Frýdlantský výběžek a Liberecko" },
+  { icon: MapPin, label: "Zakázky pro celý Liberecký kraj" },
 ];
 
 export default function HeroSection() {
@@ -42,8 +42,8 @@ export default function HeroSection() {
 
           <p className="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-slate-300 sm:text-lg">
             Výroba nástrojů, přípravků a přesných dílů pro průmysl. Soustružení,
-            frézování a zakázkové kovoobrábění v provozovně v Dolní Řasnici na
-            Frýdlantsku.
+            frézování a zakázkové kovoobrábění v provozovně v Dolní Řasnici pro
+            zákazníky v celém Libereckém kraji.
           </p>
 
           <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">

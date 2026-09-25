@@ -78,7 +78,7 @@ const WEB3FORMS_ACCESS_KEY = "eabb1d5b-e52f-4c08-b654-b59197ac68a3";
 const QUICK_HIGHLIGHTS: QuickHighlight[] = [
   { icon: ShieldCheck, label: "Soustružení a frézování" },
   { icon: Layers, label: "Zakázková i maloseriová výroba" },
-  { icon: MapPin, label: "Frýdlantský výběžek a Liberecko" },
+  { icon: MapPin, label: "Zakázky pro celý Liberecký kraj" },
 ];
 
 function validateForm(data: ContactFormData): ContactFormErrors {

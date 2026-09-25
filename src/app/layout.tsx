@@ -12,7 +12,7 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: "Jiří Vorlický | Nástrojárna a kovoobrábění Dolní Řasnice",
   description:
-    "Nástrojárna Jiřího Vorlického v Dolní Řasnici. Výroba nástrojů a přípravků, soustružení, frézování a zakázkové kovoobrábění ve Frýdlantském výběžku a Libereckém kraji.",
+    "Nástrojárna Jiřího Vorlického v Dolní Řasnici. Výroba nástrojů a přípravků, soustružení, frézování a zakázkové kovoobrábění pro zákazníky v celém Libereckém kraji.",
   keywords: [
     "nástrojárna",
     "kovoobrábění",
@@ -21,7 +21,6 @@ export const metadata: Metadata = {
     "soustružení",
     "frézování",
     "Frýdlant v Čechách",
-    "Frýdlantský výběžek",
     "Liberecký kraj",
   ],
   authors: [{ name: "Jiří Vorlický" }],
@@ -32,7 +31,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Jiří Vorlický | Nástrojárna a kovoobrábění Dolní Řasnice",
     description:
-      "Výroba nástrojů a přípravků, soustružení, frézování a zakázkové kovoobrábění ve Frýdlantském výběžku.",
+      "Výroba nástrojů a přípravků, soustružení, frézování a zakázkové kovoobrábění pro zákazníky v celém Libereckém kraji.",
     locale: "cs_CZ",
     type: "website",
   },

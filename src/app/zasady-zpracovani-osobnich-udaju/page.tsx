@@ -46,10 +46,9 @@ export default function PrivacyPolicyPage() {
                 </p>
                 <p className="mt-3">
                   Jiří Vorlický provozuje zakázkovou nástrojárnu a kovoobrábění
-                  v Dolní Řasnici na Frýdlantsku. V dílně se věnuje výrobě
-                  nástrojů a přípravků, soustružení, frézování, vrtání i
-                  broušení pro zákazníky ze strojírenského průmyslu v Libereckém
-                  kraji i mimo něj.
+                  v Dolní Řasnici. V dílně se věnuje výrobě nástrojů a
+                  přípravků, soustružení, frézování, vrtání i broušení pro
+                  zákazníky ze strojírenského průmyslu v celém Libereckém kraji.
                 </p>
                 <ul className="mt-3 space-y-1">
                   <li>
